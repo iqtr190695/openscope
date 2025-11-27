@@ -770,8 +770,8 @@ export default class StripViewModel extends BaseModel {
 
         this.insideCenter = insideCenter;
         this._transponder = transponderCode;
-        this._assignedAltitude = assignedAltitude;
-        this._flightPlanAltitude = flightPlanAltitude;
+        this._assignedAltitude = Math.round(assignedAltitude);
+        this._flightPlanAltitude = Math.round(flightPlanAltitude);
         this._arrivalAirport = arrivalAirportId;
         this._departureAirport = departureAirportId;
         this._flightPlan = flightPlan;
