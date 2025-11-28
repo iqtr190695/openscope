@@ -601,15 +601,9 @@ export default class CanvasController {
 
         const airportModel = AirportController.airport_get();
 
-        // TODO: we should try to consolidate this so we aren't looping over the runway collection multiple times
-        // Extended Centerlines
         for (let i = 0; i < airportModel.runways.length; i++) {
             this._drawSingleRunway(cc, airportModel.runways[i][0], true);
             this._drawSingleRunway(cc, airportModel.runways[i][1], true);
-        }
-
-        // Runways
-        for (let i = 0; i < airportModel.runways.length; i++) {
             this._drawSingleRunway(cc, airportModel.runways[i][0], false);
         }
 
