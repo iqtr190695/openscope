@@ -591,9 +591,6 @@ export default class CanvasController {
      * @private
      */
     _drawRunways(cc) {
-        if (!this._shouldDrawFixLabels) {
-            return;
-        }
 
         cc.save();
         this._ccTranslateFromCanvasOriginToAirportCenter(cc);
@@ -631,9 +628,6 @@ export default class CanvasController {
      * @private
      */
     _drawRunwayLabels(cc) {
-        if (!this._shouldDrawFixLabels) {
-            return;
-        }
 
         const airportModel = AirportController.airport_get();
 
