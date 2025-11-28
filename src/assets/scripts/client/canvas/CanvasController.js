@@ -602,8 +602,6 @@ export default class CanvasController {
         const airportModel = AirportController.airport_get();
 
         for (let i = 0; i < airportModel.runways.length; i++) {
-            this._drawSingleRunway(cc, airportModel.runways[i][0], true);
-            this._drawSingleRunway(cc, airportModel.runways[i][1], true);
             this._drawSingleRunway(cc, airportModel.runways[i][0], false);
         }
 
