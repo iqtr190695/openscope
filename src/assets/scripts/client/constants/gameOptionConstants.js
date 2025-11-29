@@ -35,7 +35,7 @@ export const GAME_OPTION_NAMES = {
 export const GAME_OPTION_VALUES = [
     {
         name: GAME_OPTION_NAMES.THEME,
-        defaultValue: 'DEFAULT',
+        defaultValue: 'CELESTIAL',
         description: 'Scope Theme',
         type: 'select',
         onChangeEventHandler: EVENT.SET_THEME,
@@ -141,7 +141,7 @@ export const GAME_OPTION_VALUES = [
     },
     {
         name: GAME_OPTION_NAMES.DRAW_PROJECTED_PATHS,
-        defaultValue: 'selected',
+        defaultValue: 'never',
         description: 'Draw aircraft projected path',
         type: 'select',
         onChangeEventHandler: null,

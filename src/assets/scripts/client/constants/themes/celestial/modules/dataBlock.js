@@ -115,7 +115,7 @@ export const DATA_BLOCK_THEME = {
      * @memberof DATA_BLOCK_THEME
      * @property HALF_HEIGHT
      */
-    HALF_HEIGHT: 16,
+    HALF_HEIGHT: 8,
 
     /**
      * One half of the width of a data block
@@ -194,7 +194,7 @@ export const DATA_BLOCK_THEME = {
      * @memberof DATA_BLOCK_THEME
      * @type {number}
      */
-    SCRATCHPAD_CHARACTER_LIMIT: 3,
+    SCRATCHPAD_CHARACTER_LIMIT: 5,
 
     /**
      * Font and size of text used in the data block
