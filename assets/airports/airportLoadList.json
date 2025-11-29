@@ -143,6 +143,12 @@
         "disabled": true
     },
     {
+        "icao": "kaac",
+        "level": "beginner",
+        "name": "Academy Airport",
+        "premium": false
+    },
+    {
         "icao": "kabq",
         "level": "beginner",
         "name": "Albuquerque International Sunport",
@@ -173,9 +179,21 @@
         "premium": false
     },
     {
+        "icao": "kcmh",
+        "level": "hard",
+        "name": "John Glenn Columbus International Airport",
+        "premium": false
+    },
+    {
         "icao": "kcvg",
         "level": "beginner",
         "name": "Cincinnati-Northern Kentucky International Airport",
+        "premium": false
+    },
+    {
+        "icao": "kday",
+        "level": "hard",
+        "name": "Dayton International Airport (Columbus Appch)",
         "premium": false
     },
     {
