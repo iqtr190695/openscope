@@ -3,6 +3,7 @@ import _has from 'lodash/has';
 import _last from 'lodash/last';
 import _without from 'lodash/without';
 import _values from 'lodash/values';
+import { isLeaderDirection } from '../../utilities/validatorUtilities';
 import {
     IMPLIED_COMMANDS,
     EXPLICIT_COMMANDS,
@@ -11,7 +12,7 @@ import {
 import { DATA_BLOCK_DIRECTION_LENGTH_SEPARATOR } from '../../constants/scopeConstants';
 
 // TODO: Replace dummy sector codes with a proper `SectorCollection`
-const SECTOR_HANDOFF_CODES = ['18', '19', '10', '12'];
+const SECTOR_HANDOFF_CODES = ['C', 'Z', 'M', 'X'];
 
 /**
  * A command to be interpreted by the scope itself
@@ -111,7 +112,7 @@ export default class ScopeCommandModel {
             return COMMAND_FUNCTIONS.SCRATCHPAD;
         }
 
-        if (firstElement.indexOf(DATA_BLOCK_DIRECTION_LENGTH_SEPARATOR) !== -1 || firstElement.length < 2) {
+        if (firstElement.indexOf(DATA_BLOCK_DIRECTION_LENGTH_SEPARATOR) !== -1 || isLeaderDirection(firstElement)) {
             return COMMAND_FUNCTIONS.MOVE_DATA_BLOCK;
         }
 

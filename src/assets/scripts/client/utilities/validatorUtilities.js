@@ -23,3 +23,20 @@ export const isEmptyOrNotObject = (value) => {
 export const isEmptyOrNotArray = (value) => {
     return !_isArray(value) || _isEmpty(value);
 };
+
+/**
+ * This will return true if it is not an array or it is empty
+ *
+ * @funtion isEmptyOrNotArray
+ * @param value {*}
+ * @return {boolean}
+ */
+export const isLeaderDirection = (str) => {
+    if (str.length !== 1) {
+      return false;
+    }
+    
+    const char = str[0];
+    // Check if character is 1-9
+    return (char >= '1' && char <= '9');
+  }
