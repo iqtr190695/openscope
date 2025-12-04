@@ -142,9 +142,9 @@ export default class CanvasController {
          *
          * @property _shouldDrawAirspace
          * @type {boolean}
-         * @default false
+         * @default true
          */
-        this._shouldDrawAirspace = false;
+        this._shouldDrawAirspace = true;
 
         /**
          * Flag used to determine if fix labels should be displayed
@@ -1622,10 +1622,12 @@ export default class CanvasController {
         const gap = 3;
         const lineheight = 4.5; // height of text row (used for spacing basis)
         const row1text = radarTargetModel.buildDataBlockRowOne();
-        let row2text = radarTargetModel.buildDataBlockRowTwoPrimaryInfo();
 
+        let row2text;
         if (this.shouldShowSecondaryDataBlock()) {
             row2text = radarTargetModel.buildDataBlockRowTwoSecondaryInfo();
+        } else {
+            row2text = radarTargetModel.buildDataBlockRowTwoPrimaryInfo();
         }
 
         cc.fillStyle = textColor;

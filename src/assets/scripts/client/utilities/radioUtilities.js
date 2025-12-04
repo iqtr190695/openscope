@@ -110,7 +110,6 @@ radio_runway_names.c = 'center';
 radio_runway_names.r = 'right';
 
 // TODO: how is this different from lpad?
-// NOT IN USE
 /**
  * Force a number to a string with a specific # of digits
  *

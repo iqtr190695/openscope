@@ -66,7 +66,16 @@ export default class ScopeCommandModel {
      * @param command {string}
      */
     _init(command) {
-        const pieces = _without(command.toUpperCase().split(' '), '');
+        let initialPieces = command.toUpperCase().split(' ');
+        const firstElement = _first(initialPieces);
+
+        // Special case for splats: *J3, *P5, etc...
+        // should be split into [SPLATJ, 3], [SPLATP, 5], etc...
+        if (firstElement && firstElement.startsWith("*")) {
+            initialPieces = [("SPLAT" + firstElement.slice(1, 2)), firstElement.slice(2), ...initialPieces.slice(1)];
+        }
+
+        const pieces = _without(initialPieces, '');
 
         this.aircraftReference = _last(pieces);
         this.commandFunction = this._extractCommandFunction(pieces);
@@ -111,7 +120,6 @@ export default class ScopeCommandModel {
         if (firstElement === '.') {
             return COMMAND_FUNCTIONS.SCRATCHPAD;
         }
-
         if (firstElement.indexOf(DATA_BLOCK_DIRECTION_LENGTH_SEPARATOR) !== -1 || isLeaderDirection(firstElement)) {
             return COMMAND_FUNCTIONS.MOVE_DATA_BLOCK;
         }

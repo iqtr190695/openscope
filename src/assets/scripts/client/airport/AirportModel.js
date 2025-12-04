@@ -7,6 +7,7 @@ import _get from 'lodash/get';
 import _map from 'lodash/map';
 import AirportController from './AirportController';
 import AirspaceModel from './AirspaceModel';
+import SectorModel from './SectorModel';
 import DynamicPositionModel from '../base/DynamicPositionModel';
 import EventBus from '../lib/EventBus';
 import GameController from '../game/GameController';
@@ -380,6 +381,7 @@ export default class AirportModel {
         this._initRangeRings(data.rangeRings);
         this.loadTerrain();
         this.buildAirspace(data.airspace);
+        this.buildSectors(data.sectors);
         this.setActiveRunwaysFromNames(data.arrivalRunway, data.departureRunway);
         this.buildRestrictedAreas(data.restricted);
         this.updateCurrentWind(data.wind);
@@ -506,6 +508,19 @@ export default class AirportModel {
 
             this.restricted_areas.push(restrictedArea);
         });
+    }
+
+    buildSectors(data) {
+        if (!data) {
+            return;
+        }
+        this.sectors = data.map((sectorObject) => {
+            const sector = new SectorModel(sectorObject);
+            return sector;
+        });
+        console.log("Build sectors called");
+        console.log(data);
+        console.log(this.sectors);
     }
 
     /**

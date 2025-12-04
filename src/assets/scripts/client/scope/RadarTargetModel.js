@@ -15,6 +15,7 @@ import {
 } from '../constants/scopeConstants';
 import { THEME } from '../constants/themes';
 import { WAKE_TURBULENCE_CATEGORY } from '../constants/aircraftConstants';
+import SectorModel from '../airport/SectorModel';
 
 /**
  * A single radar target observed by the radar system and shown on the scope
@@ -24,6 +25,9 @@ import { WAKE_TURBULENCE_CATEGORY } from '../constants/aircraftConstants';
  * @class RadarTargetModel
  */
 export default class RadarTargetModel {
+
+    DEFAULT_SYMBOL = '';
+
     /**
      * @for RadarTargetModel
      * @constructor
@@ -136,6 +140,20 @@ export default class RadarTargetModel {
          */
         this._isUnderOurControl = true;
 
+        // TODO: This will be replaced with `this._sectorInControl` or something
+        // when handoffs become possible. For now, just marking whether or not "we"
+        // are the sector with control of the track.
+        /**
+         * Boolean value representing whether the track of this target is under
+         * control of this particular scope.
+         *
+         * @for RadarTargetModel
+         * @property _isUnderOurControl
+         * @type {SectorModel}
+         */
+        this.sectorInControl = null;
+
+
         // TODO: Store the aircraft's initial route here. Yes, we want to intentionally
         // make a copy of the route and store it here, not point to the aircraft's route.
         // When the aircraft is told to fly a new route, this property should still show
@@ -158,6 +176,16 @@ export default class RadarTargetModel {
          * @type {string}
          */
         this._scratchPadText = '';
+
+        /**
+         * A 3 character (or less) alphanumeric string that is shown in the data block
+         * The scratchpad+ is used for controller shorthand notes and other purposes
+         *
+         * @for RadarTargetModel
+         * @property _scratchPadPlusText
+         * @type {string}
+         */
+        this._scratchPadPlusText = '';
 
         /**
          * Active theme
@@ -227,6 +255,19 @@ export default class RadarTargetModel {
 
     set scratchPadText(text) {
         this._scratchPadText = text.slice(0, 3).toUpperCase();
+    }
+
+    /**
+     * @for RadarTargetModel
+     * @property scratchPadPlusText
+     * @type {string}
+     */
+    get scratchPadPlusText() {
+        return this._scratchPadPlusText;
+    }
+
+    set scratchPadPlusText(text) {
+        this._scratchPadPlusText = text.slice(0, 3).toUpperCase();
     }
 
     /**
@@ -312,6 +353,7 @@ export default class RadarTargetModel {
         this._hasSuppressedDataBlock = false;
         this._interimAltitude = INVALID_NUMBER;
         this._isUnderOurControl = true;
+        this.symbol = this.DEFAULT_SYMBOL;
         this._routeString = '';
 
         return this;
@@ -514,7 +556,7 @@ export default class RadarTargetModel {
             return [true, 'TOGGLE HALO'];
         }
 
-        if (radius === this._haloRadius) {
+        if (radius === this._haloRadius || radius < 1) {
             return this.removeHalo();
         }
 
@@ -533,11 +575,9 @@ export default class RadarTargetModel {
     setDefaultScratchpad() {
         if (this.aircraftModel.isDeparture()) {
             this.scratchPadText = this.aircraftModel.fms.getFlightPlanEntry();
-
-            return [true, 'RESET SCRATCHPAD'];
+        } else {
+            this.scratchPadText = this.aircraftModel.destination.substr(1, 3);
         }
-
-        this.scratchPadText = this.aircraftModel.destination.substr(1, 3);
 
         return [true, 'RESET SCRATCHPAD'];
     }

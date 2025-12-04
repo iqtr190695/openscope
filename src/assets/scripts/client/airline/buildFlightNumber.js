@@ -17,9 +17,9 @@ const defaultCallsignFormats = [DEFAULT_CALLSIGN_FORMAT];
  * @param i {number}
  * @return NUMERIC {string}
 */
-function _generateRandomDigit(i) {
+function _generateRandomDigit(i, max) {
     if (i === 0) {
-        return choose(NUMERIC.substr(1));
+        return choose(NUMERIC.slice(1, max));
     }
 
     return choose(NUMERIC);
@@ -80,6 +80,19 @@ export function buildFlightNumber(callsignFormats) {
         switch (chosenFormat[i]) {
             case CALLSIGN_RANDOM_DIGIT_CHARACTER:
                 flightNumber += _generateRandomDigit(i);
+                break;
+            case '0':
+            case '1':
+            case '2':
+            case '3':
+            case '4':
+            case '5':
+            case '6':
+            case '7':
+            case '8':
+            case '9':
+                let maxNumeric = +(chosenFormat[i]) + 1;
+                flightNumber += _generateRandomDigit(i, maxNumeric);
                 break;
             case CALLSIGN_RANDOM_LETTER_CHARACTER:
                 flightNumber += _generateRandomLetter();

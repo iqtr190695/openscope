@@ -454,7 +454,7 @@ export default class InputController {
             return;
         }
 
-        // pass keboard inputs to autocomplete if it is active
+        // pass keyboard inputs to autocomplete if it is active
         if (this._autocompleteController.active) {
             this._autocompleteController.onKeydownHandler(event);
             return;
@@ -468,7 +468,6 @@ export default class InputController {
             code = event.originalEvent.keyCode;
         }
 
-        // TODO: this switch can be simplified, there is a lot of repetition here
         switch (code) {
             case KEY_CODES.CONTROL_LEFT:
             case KEY_CODES.CONTROL_RIGHT:
