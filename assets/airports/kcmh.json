@@ -22062,6 +22062,142 @@
             ]
         }
     ],
+    "sectors": [
+        {
+            "sectorID": "M",
+            "symbol": "M",
+            "name": "Middletown",
+            "publicName": "Columbus Approach",
+            "frequency": "118.85",
+            "facility": "Columbus",
+            "isInHouse": true
+        },
+        {
+            "sectorID": "U",
+            "symbol": "U",
+            "name": "Urbana",
+            "publicName": "Columbus Approach",
+            "frequency": "134.45",
+            "facility": "Columbus",
+            "isInHouse": true
+        },
+        {
+            "sectorID": "X",
+            "symbol": "X",
+            "name": "Xenia",
+            "publicName": "Columbus Approach",
+            "frequency": "134.45",
+            "facility": "Columbus",
+            "isInHouse": true
+        },
+        {
+            "sectorID": "C30",
+            "symbol": "C",
+            "name": "Columbus",
+            "publicName": "Indianapolis Center",
+            "frequency": "124.45",
+            "facility": "Indy",
+            "lineID": "73",
+            "isInHouse": false
+        },
+        {
+            "sectorID": "C31",
+            "symbol": "C",
+            "name": "Lytle",
+            "publicName": "Indianapolis Center",
+            "frequency": "120.47",
+            "facility": "Indy",
+            "lineID": "73",
+            "isInHouse": false
+        },
+        {
+            "sectorID": "C32",
+            "symbol": "C",
+            "name": "Rosewood",
+            "publicName": "Indianapolis Center",
+            "frequency": "128.07",
+            "facility": "Indy",
+            "lineID": "73",
+            "isInHouse": false
+        },
+        {
+            "sectorID": "C33",
+            "symbol": "C",
+            "name": "Muncie",
+            "publicName": "Indianapolis Center",
+            "frequency": "124.52",
+            "facility": "Indy",
+            "lineID": "73",
+            "isInHouse": false
+        },
+        {
+            "sectorID": "C34",
+            "symbol": "C",
+            "name": "Shelbyville",
+            "publicName": "Indianapolis Center",
+            "frequency": "119.55",
+            "facility": "Indy",
+            "lineID": "73",
+            "isInHouse": false
+        },
+        {
+            "sectorID": "C22",
+            "symbol": "C",
+            "name": "Covington",
+            "publicName": "Indianapolis Center",
+            "frequency": "123.92",
+            "facility": "Indy",
+            "lineID": "85",
+            "isInHouse": false
+        },
+        {
+            "sectorID": "C24",
+            "symbol": "C",
+            "name": "Pike",
+            "publicName": "Indianapolis Center",
+            "frequency": "135.57",
+            "facility": "Indy",
+            "lineID": "85",
+            "isInHouse": false
+        },
+        {
+            "sectorID": "C69",
+            "symbol": "C",
+            "name": "Parkersburg",
+            "publicName": "Indianapolis Center",
+            "frequency": "125.55",
+            "facility": "Indy",
+            "lineID": "85",
+            "isInHouse": false
+        },
+        {
+            "sectorID": "Z02",
+            "symbol": "Z",
+            "name": "Pandora",
+            "publicName": "Cleveland Center",
+            "frequency": "128.62",
+            "facility": "Cleveland",
+            "isInHouse": false
+        },
+        {
+            "sectorID": "Z03",
+            "symbol": "Z",
+            "name": "Marion",
+            "publicName": "Cleveland Center",
+            "frequency": "135.1",
+            "facility": "Cleveland",
+            "isInHouse": false
+        },
+        {
+            "sectorID": "Z04",
+            "symbol": "Z",
+            "name": "Mansfield",
+            "publicName": "Cleveland Center",
+            "frequency": "134.9",
+            "facility": "Cleveland",
+            "isInHouse": false
+        }
+    ],
     "maps": [
         {
             "name": "Base Map",
