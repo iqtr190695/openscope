@@ -26,5 +26,7 @@ export const COLOR = {
     RED_02: 'rgba(224, 128, 128, 0.2)',
     WHITE: 'rgba(255, 255, 255, 1.0)',
     WHITE_05: 'rgba(255, 255, 255, 0.5)',
+    CYAN: 'rgba(0, 255, 255, 1.0)',
+    CYAN_05: 'rgba(0, 255, 255, 0.5)',
     TRANSPARENT: 'rgba(0, 0, 0, 0)'
 };

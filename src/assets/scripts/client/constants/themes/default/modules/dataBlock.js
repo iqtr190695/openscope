@@ -232,6 +232,14 @@ export const DATA_BLOCK_THEME = {
     TEXT_SELECTED: COLOR.WHITE,
 
     /**
+     * Color of text used in the data block when cyan'd
+     *
+     * @memberof DATA_BLOCK_THEME
+     * @property TEXT_CYAN
+     */
+    TEXT_CYAN: COLOR.CYAN,
+
+    /**
      * Width of the data block
      *
      * @memberof DATA_BLOCK_THEME

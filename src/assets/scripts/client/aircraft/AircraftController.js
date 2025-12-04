@@ -198,6 +198,7 @@ export default class AircraftController {
         this._eventBus.on(EVENT.STRIP_DOUBLE_CLICK, this._onStripDoubleClickHandler);
         this._eventBus.on(EVENT.SELECT_AIRCRAFT, this._onSelectAircraft);
         this._eventBus.on(EVENT.DESELECT_AIRCRAFT, this._onDeselectAircraft);
+        this._eventBus.on(EVENT.CYAN_AIRCRAFT, this._onCyanAircraft);
         this._eventBus.on(EVENT.SCROLL_TO_AIRCRAFT, this._onScrollToAircraft);
         this._eventBus.on(EVENT.REMOVE_AIRCRAFT, this._onRemoveAircraftHandler);
         this._eventBus.on(EVENT.REMOVE_AIRCRAFT_CONFLICT, this.removeConflict);
@@ -215,7 +216,8 @@ export default class AircraftController {
         this._eventBus.off(EVENT.STRIP_DOUBLE_CLICK, this._onStripDoubleClickHandler);
         this._eventBus.off(EVENT.SELECT_AIRCRAFT, this._onSelectAircraft);
         this._eventBus.off(EVENT.DESELECT_AIRCRAFT, this._onDeselectAircraft);
-        this._eventBus.off(EVENT.SCROLL_TO_AIRCRAFT, this._onScrollToAircraft);
+        this._eventBus.off(EVENT.CYAN_AIRCRAFT, this._onDeselectAircraft);
+        this._eventBus.off(EVENT.SCROLL_TO_AIRCRAFT, this._onCyanAircraft);
         this._eventBus.off(EVENT.REMOVE_AIRCRAFT, this._onRemoveAircraftHandler);
         this._eventBus.off(EVENT.REMOVE_AIRCRAFT_CONFLICT, this.removeConflict);
 
@@ -770,6 +772,22 @@ export default class AircraftController {
     };
 
     /**
+     * Make target cyan
+     *
+     * @for AircraftController
+     * @method _onCyanAircraft
+     * @param  aircraftModel {AircraftModel}
+     * @private
+     */
+    _onCyanAircraft = (aircraftModel) => {
+        if (!aircraftModel.isControllable) {
+            return;
+        }
+        // Toggle cyan status
+        aircraftModel.isCyan = !aircraftModel.isCyan;
+    };
+
+    /**
      * Remove the css classname used to show a `StripViewModel` as selected.
      *
      * This method is usually called when it is not known what, or if,
@@ -889,13 +907,13 @@ export default class AircraftController {
             EventBus.trigger(AIRCRAFT_EVENT.FULLSTOP, aircraftModel, aircraftModel.fms.arrivalRunwayModel);
 
             UiController.ui_log(`${aircraftModel.callsign} switching to ground, good day`);
-            speech_say(
+            /*speech_say(
                 [
                     { type: 'callsign', content: aircraftModel },
                     { type: 'text', content: ', switching to ground, good day' }
                 ],
                 aircraftModel.pilotVoice
-            );
+            );*/
 
             GameController.events_recordNew(GAME_EVENTS.ARRIVAL);
             this.aircraft_remove(aircraftModel);

@@ -10,6 +10,8 @@ export const COLOR = {
     BLUE_06: 'rgba(128, 255, 255, 0.6)',
     BLUE_09: 'rgba(128, 255, 255, 0.9)',
     BLUE_LIGHT_SOFT_03: 'rgba(150, 200, 255, 0.3)',
+    CYAN: 'rgba(0, 255, 255, 1.0)',
+    CYAN_05: 'rgba(0, 255, 255, 0.5)',
     GRAY_LIGHT: 'rgba(224, 224, 224, 1.0)',
     GRAY: 'rgba(150, 150, 150, 1)',
     GREEN_02: 'rgba(76, 118, 97, 0.2)',

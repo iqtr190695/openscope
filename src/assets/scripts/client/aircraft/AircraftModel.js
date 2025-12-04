@@ -395,6 +395,17 @@ export default class AircraftModel {
         this.isControllable = false;
 
         /**
+         * Whether aircraft has been marked blue/cyan by the controller
+         *
+         * @for AircraftModel
+         * @property isCyan
+         * @type {boolean}
+         * @default false
+         */
+        this.isCyan = false;
+
+
+        /**
          * List of aircraft that MAY be in conflict (bounding box)
          *
          * @for AircraftModel

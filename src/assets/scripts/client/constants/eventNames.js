@@ -34,6 +34,16 @@ export const EVENT = {
     CHAT_LOG_DURATION_CHANGE: 'chat-log-duration-change',
 
     /**
+     * An aircraft radar return was clicked and the corresponding
+     * `StripViewModel` must also be selected
+     *
+     * @memberof EVENT
+     * @property CYAN_AIRCRAFT
+     * @type {string}
+     */
+    CYAN_AIRCRAFT: 'cyan-aircraft',
+
+    /**
      * A click was registered outside of a specific `StripViewModel`
      * and the active strip, if any, should have the `active`
      * css classname removed

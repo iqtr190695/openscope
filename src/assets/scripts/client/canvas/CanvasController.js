@@ -237,6 +237,7 @@ export default class CanvasController {
     _setupHandlers() {
         this._onSelectAircraftHandler = this._onSelectAircraft.bind(this);
         this._onDeselectAircraftHandler = this._onDeselectAircraft.bind(this);
+        this._onCyanAircraftHandler = this._onCyanAircraft.bind(this);
         this._onCenterPointInViewHandler = this._onCenterPointInView.bind(this);
         this._onChangeViewportPanHandler = this._onChangeViewportPan.bind(this);
         this._onChangeViewportZoomHandler = this._onChangeViewportZoom.bind(this);
@@ -265,6 +266,7 @@ export default class CanvasController {
     enable() {
         this._eventBus.on(EVENT.SELECT_AIRCRAFT, this._onSelectAircraftHandler);
         this._eventBus.on(EVENT.DESELECT_AIRCRAFT, this._onDeselectAircraftHandler);
+        this._eventBus.on(EVENT.CYAN_AIRCRAFT, this._onCyanAircraftHandler);
         this._eventBus.on(EVENT.REQUEST_TO_CENTER_POINT_IN_VIEW, this._onCenterPointInViewHandler);
         this._eventBus.on(EVENT.PAN_VIEWPORT, this._onChangeViewportPanHandler);
         this._eventBus.on(EVENT.ZOOM_VIEWPORT, this._onChangeViewportZoomHandler);
@@ -293,6 +295,7 @@ export default class CanvasController {
     disable() {
         this._eventBus.off(EVENT.SELECT_AIRCRAFT, this._onSelectAircraftHandler);
         this._eventBus.off(EVENT.DESELECT_AIRCRAFT, this._onDeselectAircraftHandler);
+        this._eventBus.off(EVENT.CYAN_AIRCRAFT, this._onCyanAircraftHandler);
         this._eventBus.off(EVENT.REQUEST_TO_CENTER_POINT_IN_VIEW, this._onCenterPointInView);
         this._eventBus.off(EVENT.PAN_VIEWPORT, this._onChangeViewportPan);
         this._eventBus.off(EVENT.ZOOM_VIEWPORT, this._onChangeViewportZoom);
@@ -427,7 +430,7 @@ export default class CanvasController {
         const dynamicCanvasCtx = this._getCanvasContextByName(CANVAS_NAME.DYNAMIC);
 
         this._clearCanvasContext(dynamicCanvasCtx);
-        this._drawSelectedAircraftCompass(dynamicCanvasCtx);
+        //this._drawSelectedAircraftCompass(dynamicCanvasCtx);
         this._drawRadarTargetList(dynamicCanvasCtx);
         this._drawAircraftDataBlocks(dynamicCanvasCtx);
         this._drawMeasureTool(dynamicCanvasCtx);
@@ -591,6 +594,9 @@ export default class CanvasController {
      * @private
      */
     _drawRunways(cc) {
+        if (!this._shouldDrawFixLabels) {
+            return;
+        }
 
         cc.save();
         this._ccTranslateFromCanvasOriginToAirportCenter(cc);
@@ -601,6 +607,14 @@ export default class CanvasController {
 
         const airportModel = AirportController.airport_get();
 
+        // TODO: we should try to consolidate this so we aren't looping over the runway collection multiple times
+        // Extended Centerlines
+        for (let i = 0; i < airportModel.runways.length; i++) {
+            this._drawSingleRunway(cc, airportModel.runways[i][0], true);
+            this._drawSingleRunway(cc, airportModel.runways[i][1], true);
+        }
+
+        // Runways
         for (let i = 0; i < airportModel.runways.length; i++) {
             this._drawSingleRunway(cc, airportModel.runways[i][0], false);
         }
@@ -620,6 +634,9 @@ export default class CanvasController {
      * @private
      */
     _drawRunwayLabels(cc) {
+        if (!this._shouldDrawFixLabels) {
+            return;
+        }
 
         const airportModel = AirportController.airport_get();
 
@@ -1092,7 +1109,7 @@ export default class CanvasController {
         }
 
         // Draw the future path
-        switch (GameController.game.option.getOptionByName('drawProjectedPaths')) {
+        /*switch (GameController.game.option.getOptionByName('drawProjectedPaths')) {
             case 'always':
                 this._drawAircraftFuturePath(cc, aircraftModel, match);
 
@@ -1105,7 +1122,8 @@ export default class CanvasController {
                 break;
             default:
                 break;
-        }
+        }*/
+        //this._drawAircraftPTL(cc, aircraftModel);
 
         const aircraftCanvasPosition = CanvasStageModel.calculatePreciseCanvasPositionFromRelativePosition(
             aircraftModel.relativePosition
@@ -1131,6 +1149,22 @@ export default class CanvasController {
         cc.fill();
 
         cc.restore();
+    }
+
+    /**
+     * Draw aircraft vector lines ("projected track lines" or "PTL")
+     *
+     * POSITIONING: Before calling this method, translate to the AIRCRAFT POSITION
+     *
+     * Note: These extend in front of aircraft a definable number of minutes
+     *
+     * @for CanvasController
+     * @method _drawAircraftPTL
+     * @param cc {HTMLCanvasContext}
+     * @param aircraftModel {AircraftModel}
+     * @private
+     */
+    _drawAircraftPTL(cc, aircraftModel) {
     }
 
     /**
@@ -1528,12 +1562,12 @@ export default class CanvasController {
             match = true;
         }
 
-        let white = aircraftModel.isControllable ?
-            this.theme.DATA_BLOCK.TEXT_IN_RANGE :
-            this.theme.DATA_BLOCK.TEXT_OUT_OF_RANGE;
+        let textColor = aircraftModel.isCyan ? this.theme.DATA_BLOCK.TEXT_CYAN : 
+            (aircraftModel.isControllable ? this.theme.DATA_BLOCK.TEXT_IN_RANGE :
+            this.theme.DATA_BLOCK.TEXT_OUT_OF_RANGE);
 
-        if (match) {
-            white = this.theme.DATA_BLOCK.TEXT_SELECTED;
+        if (!aircraftModel.isCyan && match) {
+            textColor = this.theme.DATA_BLOCK.TEXT_SELECTED;
         }
 
         cc.textBaseline = 'middle';
@@ -1575,7 +1609,7 @@ export default class CanvasController {
         cc.beginPath();
         cc.moveTo(...leaderStart);
         cc.lineTo(...leaderEnd);
-        cc.strokeStyle = white;
+        cc.strokeStyle = textColor;
         cc.stroke();
 
         const dataBlockCenterCanvasPosition = radarTargetModel.calculateDataBlockCenter(leaderIntersectionWithBlock);
@@ -1594,11 +1628,7 @@ export default class CanvasController {
             row2text = radarTargetModel.buildDataBlockRowTwoSecondaryInfo();
         }
 
-        const fillStyle = aircraftModel.isControllable ?
-            this.theme.DATA_BLOCK.TEXT_IN_RANGE :
-            this.theme.DATA_BLOCK.TEXT_OUT_OF_RANGE;
-
-        cc.fillStyle = fillStyle;
+        cc.fillStyle = textColor;
 
         // Draw full datablock text
         cc.font = this.theme.DATA_BLOCK.TEXT_FONT;
@@ -2721,11 +2751,24 @@ export default class CanvasController {
      * forcing a redraw of the dynamic canvas on the next frame.
      *
      * @for CanvasController
-     * @method _onDeselectAircraft
+     * @method _onCyanAircraft
      * @returns undefined
      * @private
      */
     _onDeselectAircraft() {
+        this._markShallowRender();
+    }
+
+    /**
+     * Trigger _markShallowRender() when an aircraft is selected, thus
+     * forcing a redraw of the dynamic canvas on the next frame.
+     *
+     * @for CanvasController
+     * @method _onSelectAircraft
+     * @returns undefined
+     * @private
+     */
+    _onCyanAircraft() {
         this._markShallowRender();
     }
 

@@ -368,8 +368,7 @@ export default class InputController {
 
                 break;
             case MOUSE_EVENT_CODE.MIDDLE_PRESS:
-                CanvasStageModel.zoomReset();
-
+                this._onMiddleMouseButtonPress(event);
                 break;
             case MOUSE_EVENT_CODE.RIGHT_PRESS:
                 this._onRightMousePress(event);
@@ -1096,6 +1095,23 @@ export default class InputController {
             this.processCommand();
         } else if (aircraftModel) {
             this.selectAircraft(aircraftModel);
+        }
+    }
+
+    /**
+     * Toggle cyan status
+     *
+     * @for InputController
+     * @method _onMiddleMouseButtonPress
+     * @param event {jquery Event}
+     * @private
+     */
+    _onMiddleMouseButtonPress(event) {
+
+        const mouseCanvasPos = CanvasStageModel.calculateCanvasPositionFromPagePosition(event.pageX, event.pageY);
+        const [aircraftModel, distanceFromPosition] = this._findClosestAircraftAndDistanceToCanvasPosition(...mouseCanvasPos);
+        if (aircraftModel) {
+            this._eventBus.trigger(EVENT.CYAN_AIRCRAFT, aircraftModel);
         }
     }
 
