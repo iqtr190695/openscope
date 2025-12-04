@@ -21712,27 +21712,39 @@
             "rate": 3,
             "airlines": [
                 [
-                    "ash",
-                    1
-                ],
-                [
                     "eny",
-                    1
-                ],
-                [
-                    "n/fastGA",
-                    2
-                ],
-                [
-                    "skw",
                     5
                 ],
                 [
+                    "n/fastGA",
+                    15
+                ],
+                [
+                    "rpa",
+                    15
+                ],
+                [
+                    "skw",
+                    2
+                ],
+                [
                     "swa",
-                    3
+                    33
+                ],
+                [
+                    "aal/short",
+                    12
+                ],
+                [
+                    "dal/short",
+                    10
                 ],
                 [
                     "ual/short",
+                    8
+                ],
+                [
+                    "fdx",
                     1
                 ]
             ]
@@ -21748,31 +21760,39 @@
             "rate": 3,
             "airlines": [
                 [
-                    "ash",
-                    1
-                ],
-                [
                     "eny",
-                    1
+                    5
                 ],
                 [
                     "n/fastGA",
-                    2
+                    15
+                ],
+                [
+                    "rpa",
+                    15
                 ],
                 [
                     "skw",
-                    1
+                    2
                 ],
                 [
                     "swa",
-                    4
+                    33
+                ],
+                [
+                    "aal/short",
+                    12
+                ],
+                [
+                    "dal/short",
+                    10
                 ],
                 [
                     "ual/short",
-                    4
+                    8
                 ],
                 [
-                    "ups",
+                    "fdx",
                     1
                 ]
             ]
@@ -21788,16 +21808,16 @@
             "rate": 3,
             "airlines": [
                 [
-                    "ash",
-                    1
-                ],
-                [
                     "eny",
-                    2
+                    5
                 ],
                 [
                     "n/fastGA",
-                    2
+                    15
+                ],
+                [
+                    "rpa",
+                    15
                 ],
                 [
                     "skw",
@@ -21805,18 +21825,22 @@
                 ],
                 [
                     "swa",
-                    6
+                    33
                 ],
                 [
-                    "fft",
-                    3
+                    "aal/short",
+                    12
+                ],
+                [
+                    "dal/short",
+                    10
                 ],
                 [
                     "ual/short",
-                    1
+                    8
                 ],
                 [
-                    "ups",
+                    "fdx",
                     1
                 ]
             ]
@@ -21832,31 +21856,39 @@
             "rate": 3,
             "airlines": [
                 [
-                    "ash",
-                    1
-                ],
-                [
                     "eny",
-                    1
-                ],
-                [
-                    "n/fastGA",
-                    2
-                ],
-                [
-                    "skw",
                     5
                 ],
                 [
+                    "n/fastGA",
+                    15
+                ],
+                [
+                    "rpa",
+                    15
+                ],
+                [
+                    "skw",
+                    2
+                ],
+                [
                     "swa",
-                    3
+                    33
+                ],
+                [
+                    "aal/short",
+                    12
+                ],
+                [
+                    "dal/short",
+                    10
                 ],
                 [
                     "ual/short",
-                    1
+                    8
                 ],
                 [
-                    "ups",
+                    "fdx",
                     1
                 ]
             ]
@@ -21872,31 +21904,39 @@
             "rate": 1,
             "airlines": [
                 [
-                    "ash",
-                    1
-                ],
-                [
                     "eny",
-                    1
-                ],
-                [
-                    "n/fastGA",
-                    2
-                ],
-                [
-                    "skw",
                     5
                 ],
                 [
+                    "n/fastGA",
+                    15
+                ],
+                [
+                    "rpa",
+                    15
+                ],
+                [
+                    "skw",
+                    2
+                ],
+                [
                     "swa",
-                    3
+                    33
+                ],
+                [
+                    "aal/short",
+                    12
+                ],
+                [
+                    "dal/short",
+                    10
                 ],
                 [
                     "ual/short",
-                    1
+                    8
                 ],
                 [
-                    "ups",
+                    "fdx",
                     1
                 ]
             ]
@@ -21912,31 +21952,39 @@
             "rate": 4,
             "airlines": [
                 [
-                    "ash",
-                    1
-                ],
-                [
                     "eny",
-                    1
-                ],
-                [
-                    "n/fastGA",
-                    2
-                ],
-                [
-                    "skw",
                     5
                 ],
                 [
+                    "n/fastGA",
+                    15
+                ],
+                [
+                    "rpa",
+                    15
+                ],
+                [
+                    "skw",
+                    2
+                ],
+                [
                     "swa",
-                    3
+                    33
+                ],
+                [
+                    "aal/short",
+                    12
+                ],
+                [
+                    "dal/short",
+                    10
                 ],
                 [
                     "ual/short",
-                    1
+                    8
                 ],
                 [
-                    "ups",
+                    "fdx",
                     1
                 ]
             ]
@@ -21952,31 +22000,39 @@
             "rate": 1,
             "airlines": [
                 [
-                    "ash",
-                    1
-                ],
-                [
                     "eny",
-                    1
-                ],
-                [
-                    "n/fastGA",
-                    2
-                ],
-                [
-                    "skw",
                     5
                 ],
                 [
+                    "n/fastGA",
+                    15
+                ],
+                [
+                    "rpa",
+                    15
+                ],
+                [
+                    "skw",
+                    2
+                ],
+                [
                     "swa",
-                    3
+                    33
+                ],
+                [
+                    "aal/short",
+                    12
+                ],
+                [
+                    "dal/short",
+                    10
                 ],
                 [
                     "ual/short",
-                    1
+                    8
                 ],
                 [
-                    "ups",
+                    "fdx",
                     1
                 ]
             ]
@@ -21992,31 +22048,39 @@
             "rate": 3,
             "airlines": [
                 [
-                    "ash",
-                    1
-                ],
-                [
                     "eny",
-                    1
-                ],
-                [
-                    "n/fastGA",
-                    2
-                ],
-                [
-                    "skw",
                     5
                 ],
                 [
+                    "n/fastGA",
+                    15
+                ],
+                [
+                    "rpa",
+                    15
+                ],
+                [
+                    "skw",
+                    2
+                ],
+                [
                     "swa",
-                    3
+                    33
+                ],
+                [
+                    "aal/short",
+                    12
+                ],
+                [
+                    "dal/short",
+                    10
                 ],
                 [
                     "ual/short",
-                    1
+                    8
                 ],
                 [
-                    "ups",
+                    "fdx",
                     1
                 ]
             ]
@@ -22032,31 +22096,39 @@
             "rate": 3,
             "airlines": [
                 [
-                    "ash",
-                    1
-                ],
-                [
                     "eny",
-                    1
-                ],
-                [
-                    "n/fastGA",
-                    2
-                ],
-                [
-                    "skw",
                     5
                 ],
                 [
+                    "n/fastGA",
+                    15
+                ],
+                [
+                    "rpa",
+                    15
+                ],
+                [
+                    "skw",
+                    2
+                ],
+                [
                     "swa",
-                    3
+                    33
+                ],
+                [
+                    "aal/short",
+                    12
+                ],
+                [
+                    "dal/short",
+                    10
                 ],
                 [
                     "ual/short",
-                    1
+                    8
                 ],
                 [
-                    "ups",
+                    "fdx",
                     1
                 ]
             ]

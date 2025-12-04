@@ -4,14 +4,12 @@
     "callsign": {
         "name": "Brickyard",
         "callsignFormats": [
-            "####"
+            "w###"
         ]
     },
     "fleets": {
         "default": [
-            ["E135", 1],
-            ["E145", 1],
-            ["E170", 188]
+            ["E170", 201]
         ]
     }
 }

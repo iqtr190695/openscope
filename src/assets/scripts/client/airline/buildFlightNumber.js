@@ -17,6 +17,18 @@ const defaultCallsignFormats = [DEFAULT_CALLSIGN_FORMAT];
  * @param i {number}
  * @return NUMERIC {string}
 */
+function _generateRandomFromString(str) {
+    return choose(str);
+}
+
+/**
+ * This picks a random number. If it is the first value within the callsign (ie. i === 0), then it picks a
+ * number between 1 and 9. Otherwise, it picks a number between 0 and 9.
+ *
+ * @function _generateRandomDigit
+ * @param i {number}
+ * @return NUMERIC {string}
+*/
 function _generateRandomDigit(i, max) {
     if (i === 0) {
         return choose(NUMERIC.slice(1, max));
@@ -76,10 +88,20 @@ export function buildFlightNumber(callsignFormats) {
     const validatedFormats = _validateCallsignFormats(callsignFormats);
     const chosenFormat = choose(validatedFormats);
 
+    // Track whether non-0 digit used for CALLSIGN_ANY_DIGIT cases
+    let hasNonZeroDigit = false;
+
     for (let i = 0; i < chosenFormat.length; i++) {
         switch (chosenFormat[i]) {
             case CALLSIGN_RANDOM_DIGIT_CHARACTER:
                 flightNumber += _generateRandomDigit(i);
+                break;
+            case CALLSIGN_ANY_DIGIT:
+                let newValue = _generateRandomFromString(NUMERIC);
+                if (newValue != '0') {
+                    hasNonZeroDigit = true;
+                }
+                flightNumber += newValue;
                 break;
             case '0':
             case '1':
@@ -94,12 +116,30 @@ export function buildFlightNumber(callsignFormats) {
                 let maxNumeric = +(chosenFormat[i]) + 1;
                 flightNumber += _generateRandomDigit(i, maxNumeric);
                 break;
+            case 'w':
+                // Support regional carriers with just 3/4 as 1st digit
+                flightNumber += _generateRandomFromString(NUMERIC.slice(3, 4));
+                break;
+            case 'c':
+                // Support regional carriers with just 3 as 1st digit
+                flightNumber += _generateRandomFromString(NUMERIC.slice(3, 4));
+                break;
+            case 'v':
+                // Support regional carriers with just 2/3 as 1st digit
+                flightNumber += _generateRandomFromString(NUMERIC.slice(2, 3));
+                break;
             case CALLSIGN_RANDOM_LETTER_CHARACTER:
                 flightNumber += _generateRandomLetter();
                 break;
             default:
                 flightNumber += chosenFormat[i];
         }
+    }
+    
+    // If splats were used
+    if (!hasNonZeroDigit && chosenFormat.includes('*')) {
+        // Won't recurse past here because default callsign does not have *
+        flightNumber = buildFlightNumber(DEFAULT_CALLSIGN_FORMAT);
     }
 
     return flightNumber;
