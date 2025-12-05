@@ -242,7 +242,7 @@ export const PERFORMANCE = {
      * @type {number}
      * @final
      */
-    TYPICAL_DESCENT_FACTOR: 0.7,
+    TYPICAL_DESCENT_FACTOR: 0.8,
 
     /**
      * Proportion of the maximum capable climb rate that aircraft will use by default
@@ -251,7 +251,7 @@ export const PERFORMANCE = {
      * @type {number}
      * @final
      */
-    TYPICAL_CLIMB_FACTOR: 0.7,
+    TYPICAL_CLIMB_FACTOR: 0.8,
 
     /**
      * Standard pressure, the baseline used universally, is 1013.25 hPa, which is equivalent to 1013.25 mb or 29.92 inHg

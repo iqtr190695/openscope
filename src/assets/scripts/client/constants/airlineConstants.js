@@ -32,3 +32,11 @@ export const CALLSIGN_RANDOM_LETTER_CHARACTER = '@';
  * @type {string}
 */
 export const CALLSIGN_RANDOM_DIGIT_CHARACTER = '#';
+
+/**
+ * Character used to represent a 0-9 in a callsign
+ *
+ * @enum CALLSIGN_ANY_DIGIT
+ * @type {string}
+*/
+export const CALLSIGN_ANY_DIGIT = '*';

@@ -2,7 +2,8 @@ import { choose } from '../utilities/generalUtilities';
 import {
     DEFAULT_CALLSIGN_FORMAT,
     CALLSIGN_RANDOM_DIGIT_CHARACTER,
-    CALLSIGN_RANDOM_LETTER_CHARACTER
+    CALLSIGN_RANDOM_LETTER_CHARACTER,
+    CALLSIGN_ANY_DIGIT
 } from '../constants/airlineConstants';
 
 const ALPHA = 'abcdefghijklmnopqrstuvwxyz';

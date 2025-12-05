@@ -795,7 +795,7 @@ export default class AircraftModel {
         // TODO: enumerate the magic number
         // in troposphere
         if (this.altitude < 36152) {
-            // TODO: break this assignemnt up into smaller parts and holy magic numbers! enumerate the magic numbers
+            // TODO: break this assignment up into smaller parts and holy magic numbers! enumerate the magic numbers
             cr_uncorr = rate * 420.7 * ((1.232 * (((518.6 - 0.00356 * altitude) / 518.6) ** 5.256)) /
                 (518.6 - 0.00356 * altitude));
             cr_current = cr_uncorr - (altitude / ceiling * cr_uncorr) + (altitude / ceiling * serviceCeilingClimbRate);
