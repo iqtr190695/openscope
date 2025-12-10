@@ -37,6 +37,7 @@ import { ENVIRONMENT } from '../constants/environmentConstants';
 import { EVENT } from '../constants/eventNames';
 import { STORAGE_KEY } from '../constants/storageKeys';
 import { distance2d } from '../math/distance';
+import SatelliteAirportModel from './SatelliteAirportModel';
 
 const DEFAULT_CTR_RADIUS_KM = 80;
 const DEFAULT_CTR_CEILING_FT = 10000;
@@ -247,7 +248,7 @@ export default class AirportModel {
         /**
          * @for AirportModel
          * @property initial_alt
-         * @type {nunmber}
+         * @type {number}
          */
         this.initial_alt = null;
 
@@ -257,6 +258,13 @@ export default class AirportModel {
          * @type {object}
          */
         this.rangeRings = null;
+
+        /**
+         * @for AirportModel
+         * @property satelliteAirports
+         * @type {array<SatelliteAirportModel>}
+         */
+        this.satelliteAirports = null;
 
         this.init(options);
     }
@@ -281,7 +289,7 @@ export default class AirportModel {
     }
 
     /**
-     * Fascade to access relative position
+     * Facade to access relative position
      *
      * @for AirportModel
      * @property relativePosition
@@ -292,7 +300,7 @@ export default class AirportModel {
     }
 
     /**
-     * Fascade to access the airport's position's magnetic declination value
+     * Facade to access the airport's position's magnetic declination value
      *
      * @for AirportModel
      * @property magneticNorth
@@ -381,10 +389,11 @@ export default class AirportModel {
         this._initRangeRings(data.rangeRings);
         this.loadTerrain();
         this.buildAirspace(data.airspace);
-        this.buildSectors(data.sectors);
         this.setActiveRunwaysFromNames(data.arrivalRunway, data.departureRunway);
         this.buildRestrictedAreas(data.restricted);
         this.updateCurrentWind(data.wind);
+        this.buildSectors(data.sectors);
+        this.buildSatelliteAirports(data.satellites);
 
         this.eventBus.on(EVENT.WIND_CHANGE, this.updateCurrentWind.bind(this));
     }
@@ -514,13 +523,26 @@ export default class AirportModel {
         if (!data) {
             return;
         }
+        console.log("Build sectors called");
+        console.log(data);
         this.sectors = data.map((sectorObject) => {
             const sector = new SectorModel(sectorObject);
             return sector;
         });
-        console.log("Build sectors called");
-        console.log(data);
         console.log(this.sectors);
+    }
+
+    buildSatelliteAirports(data) {
+        if (!data) {
+            return;
+        }
+        console.log("Build satellite airports called");
+        console.log(data);
+        this.satelliteAirports = data.map((satAirportObj) => {
+            const sector = new SatelliteAirportModel(satAirportObj);
+            return sector;
+        });
+        console.log(this.satelliteAirports);
     }
 
     /**

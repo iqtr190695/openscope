@@ -611,7 +611,7 @@ export default class AircraftModel {
     }
 
     /**
-     * Fascade to access relative position
+     * Facade to access relative position
      *
      * @for AircraftModel
      * @property relativePosition
@@ -1052,6 +1052,11 @@ export default class AircraftModel {
             runwayModel = this.fms.arrivalRunwayModel;
         }
 
+        // Some error is occurring
+        if (!airportModel || !runwayModel) {
+            return false;
+        }
+
         const errorAllowanceInFeet = 5;
         const isAtOrBelowRunwayAltitude = this.altitude - runwayModel.elevation < errorAllowanceInFeet;
         const isAtOrBelowAirportAltitude = this.altitude - airportModel.elevation < errorAllowanceInFeet;
@@ -1485,7 +1490,7 @@ export default class AircraftModel {
     }
 
     /**
-     * Fascade to set the fms's flight phase
+     * Facade to set the fms's flight phase
      *
      * @for AircraftModel
      * @method setFlightPhase

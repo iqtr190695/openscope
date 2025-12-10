@@ -73,7 +73,7 @@ export default class RunwayCollection extends BaseCollection {
     }
 
     /**
-     * Public fascade for `#_items`
+     * Public facade for `#_items`
      *
      * @property runways
      * @return {array<RunwayModel>}

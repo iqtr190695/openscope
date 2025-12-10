@@ -112,7 +112,7 @@ export const GAME_OPTION_VALUES = [
     },
     {
         name: GAME_OPTION_NAMES.PROJECTED_TRACK_LINE_LENGTHS,
-        defaultValue: '1-2-4-8',
+        defaultValue: '0.5-1-1.5-2-2.5-3-3.5-4-4.5-5-5.5-6-6.5-7-7.5-8',
         description: 'Projected Track Line (PTL) increments, in minutes',
         type: 'select',
         onChangeEventHandler: null,

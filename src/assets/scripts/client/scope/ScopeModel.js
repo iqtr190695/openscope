@@ -38,10 +38,10 @@ export default class ScopeModel {
          * @for ScopeModel
          * @property _ptlLength
          * @type {number} length in minutes
-         * @default 0
+         * @default 0.5
          * @private
          */
-        this._ptlLength = 0;
+        this._ptlLength = 0.5;
 
         // TODO: Use this!
         /**
@@ -168,13 +168,9 @@ export default class ScopeModel {
 
         if (nextIndex < 0) {
             this._ptlLength = 0;
-
-            this._eventBus.trigger(EVENT.MARK_SHALLOW_RENDER);
-
-            return;
+        } else {
+            this._ptlLength = validValues[nextIndex];
         }
-
-        this._ptlLength = validValues[nextIndex];
 
         this._eventBus.trigger(EVENT.MARK_SHALLOW_RENDER);
     }
@@ -186,9 +182,9 @@ export default class ScopeModel {
      * @method decreasePtlLength
      */
     decreasePtlLength() {
-        const direction = -1;
+        const optionDirection = -1;
 
-        this.changePtlLength(direction);
+        this.changePtlLength(optionDirection);
     }
 
     /**
@@ -198,9 +194,9 @@ export default class ScopeModel {
      * @method increasePtlLength
      */
     increasePtlLength() {
-        const direction = 1;
+        const optionDirection = 1;
 
-        this.changePtlLength(direction);
+        this.changePtlLength(optionDirection);
     }
 
     /**

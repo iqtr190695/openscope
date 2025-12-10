@@ -144,7 +144,7 @@ export default class RunwayModel extends BaseModel {
     }
 
     /**
-     * Fascade to access relative position
+     * Facade to access relative position
      *
      * @for RunwayModel
      * @property relativePosition

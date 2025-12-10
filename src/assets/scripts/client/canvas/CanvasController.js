@@ -142,9 +142,9 @@ export default class CanvasController {
          *
          * @property _shouldDrawAirspace
          * @type {boolean}
-         * @default true
+         * @default false
          */
-        this._shouldDrawAirspace = true;
+        this._shouldDrawAirspace = false;
 
         /**
          * Flag used to determine if fix labels should be displayed
@@ -419,6 +419,7 @@ export default class CanvasController {
             this._drawRestrictedAirspace(staticCanvasCtx);
             this._drawRunways(staticCanvasCtx);
             this._drawAirportFixesAndLabels(staticCanvasCtx);
+            this._drawSatelliteAirports(staticCanvasCtx);
             this._drawSids(staticCanvasCtx);
             this._drawStars(staticCanvasCtx);
             this._drawAirspaceAndRangeRings(staticCanvasCtx);
@@ -430,7 +431,7 @@ export default class CanvasController {
         const dynamicCanvasCtx = this._getCanvasContextByName(CANVAS_NAME.DYNAMIC);
 
         this._clearCanvasContext(dynamicCanvasCtx);
-        //this._drawSelectedAircraftCompass(dynamicCanvasCtx);
+        //this._drawSelectedAircraftCompass(dynamicCanvasCtx); // No one actually uses this
         this._drawRadarTargetList(dynamicCanvasCtx);
         this._drawAircraftDataBlocks(dynamicCanvasCtx);
         this._drawMeasureTool(dynamicCanvasCtx);
@@ -706,24 +707,23 @@ export default class CanvasController {
      * @private
      */
     _drawSingleFixAndLabel(cc, fixModel) {
-        const fixCanvasPosition = CanvasStageModel.calculateRoundedCanvasPositionFromRelativePosition(fixModel.relativePosition);
+        const canvasPosition = CanvasStageModel.calculateRoundedCanvasPositionFromRelativePosition(fixModel.relativePosition);
 
-        cc.save();
-        cc.translate(...fixCanvasPosition);
-        cc.fillStyle = this.theme.SCOPE.FIX_FILL;
-        cc.globalCompositeOperation = 'source-over';
-        cc.lineWidth = 1;
+        cc.translate(...canvasPosition);
+
         cc.beginPath();
         cc.moveTo(0, -5);
         cc.lineTo(4, 3);
         cc.lineTo(-4, 3);
         cc.closePath();
         cc.fill();
-        cc.fillStyle = this.theme.SCOPE.FIX_TEXT;
-        cc.textAlign = 'center';
-        cc.textBaseline = 'top';
+
         cc.fillText(fixModel.name, 0, 6);
-        cc.restore();
+
+        // Restore canvas: inverse the translation
+        canvasPosition[0] = -canvasPosition[0];
+        canvasPosition[1] = -canvasPosition[1];
+        cc.translate(...canvasPosition);
     }
 
     /**
@@ -747,12 +747,107 @@ export default class CanvasController {
 
         cc.lineJoin = 'round';
         cc.font = BASE_CANVAS_FONT;
+        cc.fillStyle = this.theme.SCOPE.FIX_FILL;
+        cc.globalCompositeOperation = 'source-over';
+        cc.lineWidth = 1;
+        cc.fillStyle = this.theme.SCOPE.FIX_TEXT;
+        cc.textAlign = 'center';
+        cc.textBaseline = 'top';
 
-        for (let i = 0; i < NavigationLibrary.realFixes.length; i++) {
-            const fixModel = NavigationLibrary.realFixes[i];
-
+        NavigationLibrary.realFixes.forEach((fixModel) => {
             this._drawSingleFixAndLabel(cc, fixModel);
+        });
+
+        cc.restore();
+    }
+
+    /**
+     * Draw a satellite airport
+     *
+     * POSITIONING: Before calling this method, translate to the SATELLITE AIRPORT CENTER
+     *
+     * @for CanvasController
+     * @method _drawSingleSatellite
+     * @param cc {HTMLCanvasContext}
+     * @param satelliteAirportModel {SatelliteAirportModel}
+     * @returns undefined
+     * @private
+     */
+    _drawSingleSatellite(cc, satelliteAirportModel) {
+
+        const canvasPosition = CanvasStageModel.calculateRoundedCanvasPositionFromRelativePosition(satelliteAirportModel.relativePosition);
+
+        cc.translate(...canvasPosition);
+
+        const airportRadiusKM = 0.3;
+        let airportRadius = CanvasStageModel._translateKilometersToPixels(airportRadiusKM);
+        const airportTick = airportRadius;
+        
+        // Circle
+        cc.beginPath();
+        cc.arc(0, 0, airportRadius, 0, tau());
+        cc.stroke();
+
+        // 4 tick marks around the circle
+        // Up tick
+        cc.beginPath();
+        cc.moveTo(0, airportRadius);
+        cc.lineTo(0, airportRadius + airportTick);
+        cc.stroke();
+        // Right tick
+        cc.beginPath();
+        cc.moveTo(airportRadius, 0);
+        cc.lineTo(airportRadius + airportTick, 0);
+        cc.stroke();
+        // Left tick
+        cc.beginPath();
+        cc.moveTo(-airportRadius, 0);
+        cc.lineTo(-airportRadius - airportTick, 0);
+        cc.stroke();
+        // Down tick
+        cc.beginPath();
+        cc.moveTo(0, -airportRadius);
+        cc.lineTo(0, -airportRadius - airportTick);
+        cc.stroke();
+
+
+        // Restore canvas: inverse the translation
+        canvasPosition[0] = -canvasPosition[0];
+        canvasPosition[1] = -canvasPosition[1];
+        cc.translate(...canvasPosition);
+    }
+
+    /**
+     * Draw the satellite airports
+     *
+     * POSITIONING: Before calling this method, ensure NO TRANSLATION has occurred
+     *
+     * @for CanvasController
+     * @method _drawSatelliteAirports
+     * @param cc {HTMLCanvasContext}
+     * @returns undefined
+     * @private
+     */
+    _drawSatelliteAirports(cc) {
+
+        // Need to have satellite airports to draw
+        if (!airportModel.satelliteAirports) {
+            return;
         }
+
+        cc.save();
+        this._ccTranslateFromCanvasOriginToAirportCenter(cc);
+
+        const airportModel = AirportController.airport_get();
+        const strokeStyle = this.theme.SCOPE.FIX_TEXT;
+        
+        cc.strokeStyle = strokeStyle;
+        cc.globalCompositeOperation = 'source-over';
+        cc.lineWidth = 2;
+
+        airportModel.satelliteAirports.forEach((airport) => {
+            this._drawSingleSatellite(cc, airport);
+        });
 
         cc.restore();
     }
@@ -1081,10 +1176,17 @@ export default class CanvasController {
             const position = aircraftModel.relativePositionHistory[i];
             const canvasPosition = CanvasStageModel.calculatePreciseCanvasPositionFromRelativePosition(position);
 
+            let radiusFactor = this.theme.RADAR_TARGET.HISTORY_DOT_SHRINK_FACTOR;
+            let radiusKM = this.theme.RADAR_TARGET.HISTORY_DOT_RADIUS_KM;
+            if (radiusFactor) {
+                let j = this.theme.RADAR_TARGET.HISTORY_LENGTH - Math.max(i, 10);
+                radiusKM *= radiusFactor ** j;
+            }
+
             cc.beginPath();
             cc.arc(
                 ...canvasPosition,
-                CanvasStageModel._translateKilometersToPixels(this.theme.RADAR_TARGET.HISTORY_DOT_RADIUS_KM),
+                CanvasStageModel._translateKilometersToPixels(radiusKM),
                 0,
                 tau()
             );
@@ -1123,7 +1225,6 @@ export default class CanvasController {
             default:
                 break;
         }*/
-        //this._drawAircraftPTL(cc, aircraftModel);
 
         const aircraftCanvasPosition = CanvasStageModel.calculatePreciseCanvasPositionFromRelativePosition(
             aircraftModel.relativePosition
@@ -1149,22 +1250,6 @@ export default class CanvasController {
         cc.fill();
 
         cc.restore();
-    }
-
-    /**
-     * Draw aircraft vector lines ("projected track lines" or "PTL")
-     *
-     * POSITIONING: Before calling this method, translate to the AIRCRAFT POSITION
-     *
-     * Note: These extend in front of aircraft a definable number of minutes
-     *
-     * @for CanvasController
-     * @method _drawAircraftPTL
-     * @param cc {HTMLCanvasContext}
-     * @param aircraftModel {AircraftModel}
-     * @private
-     */
-    _drawAircraftPTL(cc, aircraftModel) {
     }
 
     /**

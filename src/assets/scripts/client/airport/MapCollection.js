@@ -78,7 +78,7 @@ export default class MapCollection extends BaseCollection {
     }
 
     /**
-     * Public fascade for `#_items`
+     * Public facade for `#_items`
      *
      * @for MapCollection
      * @property maps

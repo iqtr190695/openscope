@@ -780,9 +780,8 @@ export default class AircraftController {
      * @private
      */
     _onCyanAircraft = (aircraftModel) => {
-        if (!aircraftModel.isControllable) {
-            return;
-        }
+        // Do not check whether aircraft is controllable - it doesn't matter in real life
+        
         // Toggle cyan status
         aircraftModel.isCyan = !aircraftModel.isCyan;
     };

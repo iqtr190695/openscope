@@ -46,7 +46,7 @@ export default class HoldCollection extends BaseCollection {
     }
 
     /**
-     * Public fascade for `#_items`
+     * Public facade for `#_items`
      *
      * @for HoldCollection
      * @property holds

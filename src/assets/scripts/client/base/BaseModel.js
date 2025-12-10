@@ -26,7 +26,7 @@ export default class BaseModel {
      * Initialize the model properties. Should be run on instantiation and, though not desired,
      * could be run multiple times after instantiation.
      *
-     * This method may be called by the constructor or from a public fascade.
+     * This method may be called by the constructor or from a public facade.
      *
      * @for BaseModel
      * @method _init

@@ -1061,7 +1061,7 @@ export default class Fms {
     }
 
     /**
-     * Fascade
+     * Facade
      *
      * @for Fms
      * @method skipToWaypointName
