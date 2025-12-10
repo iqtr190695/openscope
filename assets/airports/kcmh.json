@@ -22,7 +22,7 @@
             39.9969467,
             -82.8921592
         ],
-        "radius_nm": 5
+        "radius_nm": 10
     },
     "has_terrain": false,
     "wind": {
