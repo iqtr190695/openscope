@@ -399,6 +399,24 @@ export default class SpawnPatternModel extends BaseModel {
          */
         this._uptime = INVALID_NUMBER;
 
+        /**
+         * Indicator whether IFR/VFR flight rules apply
+         *
+         * @property isVFR
+         * @type {boolean}
+         * @default false
+         */
+        this.isVFR = false;
+
+        /**
+         * Indicator whether track will be associated
+         *
+         * @property isAssociated
+         * @type {boolean}
+         * @default true
+         */
+        this.isAssociated = true;
+
         this.init(spawnPatternJson);
     }
 
@@ -510,6 +528,9 @@ export default class SpawnPatternModel extends BaseModel {
         this.rate = parseFloat(spawnPatternJson.rate);
         this.defaultRate = this.rate;
         this.entrail = _get(spawnPatternJson, 'entrail', this.entrail);
+
+        this.isVFR = _get(spawnPatternJson, 'isVFR', this.isVFR);
+        this.isAssociated = _get(spawnPatternJson, 'isAssociated', this.isAssociated);
 
         this._routeModel = new RouteModel(spawnPatternJson.route);
         this.cycleStartTime = 0;

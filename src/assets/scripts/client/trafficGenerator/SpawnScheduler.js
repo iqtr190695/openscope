@@ -122,6 +122,9 @@ class SpawnScheduler {
      * @return {array}
      */
     createNextSchedule(spawnPatternModel) {
+        if (!spawnPatternModel.isAssociated) {
+            return;
+        }
         const delay = spawnPatternModel.getNextDelayValue(TimeKeeper.accumulatedDeltaTime);
 
         return this._createTimeout(spawnPatternModel, delay);

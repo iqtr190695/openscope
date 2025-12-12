@@ -6,36 +6,22 @@ import _forEach from 'lodash/forEach';
 import _get from 'lodash/get';
 import _map from 'lodash/map';
 import AirportController from './AirportController';
-import AirspaceModel from './AirspaceModel';
-import SectorModel from './SectorModel';
-import DynamicPositionModel from '../base/DynamicPositionModel';
-import EventBus from '../lib/EventBus';
-import GameController from '../game/GameController';
-import MapCollection from './MapCollection';
 import RunwayCollection from './runway/RunwayCollection';
 import StaticPositionModel from '../base/StaticPositionModel';
-import TimeKeeper from '../engine/TimeKeeper';
 import { isValidGpsCoordinatePair } from '../base/positionModelHelpers';
 import { degreesToRadians, parseElevation } from '../utilities/unitConverters';
 import {
     sin,
-    cos,
-    round
+    cos
 } from '../math/core';
 import {
     vectorize2dFromRadians,
-    vlen,
-    vsub,
-    vadd,
     vscale
 } from '../math/vector';
 import {
     FLIGHT_CATEGORY,
     PERFORMANCE
 } from '../constants/aircraftConstants';
-import { ENVIRONMENT } from '../constants/environmentConstants';
-import { EVENT } from '../constants/eventNames';
-import { STORAGE_KEY } from '../constants/storageKeys';
 import { distance2d } from '../math/distance';
 
 /**
