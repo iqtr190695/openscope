@@ -31,7 +31,7 @@ gulp.task(OPTIONS.TASKS.BUILD.DEFAULT, gulp.series(
     buildAndMarkup,
     jsonAssembler,
     markdownAssembler,
-    copyChangelog,
+    //copyChangelog,
     OPTIONS.TASKS.COPY.DIST
 ));
 

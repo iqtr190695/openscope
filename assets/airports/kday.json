@@ -7,6 +7,7 @@
     },
     "icao": "KDAY",
     "iata": "DAY",
+    "sia_static": "24 23 22",
     "magnetic_north": -7,
     "ctr_radius": 50,
     "ctr_ceiling": 13000,
@@ -21955,7 +21956,7 @@
             "category": "arrival",
             "route": "SHB..RID..DQN",
             "altitude": "24000",
-            "speed": "360",
+            "speed": "320",
             "method": "random",
             "rate": 2,
             "airlines": [
@@ -22114,8 +22115,8 @@
             "destination": "",
             "category": "departure",
             "route": "KDAY24L.DAY8.ROD..TORRR",
-            "altitude": "16000",
-            "speed": "320",
+            "altitude": "",
+            "speed": "",
             "method": "random",
             "rate": 1,
             "airlines": [
@@ -22126,6 +22127,23 @@
                 [
                     "n/fastGA",
                     2
+                ]
+            ]
+        },
+        {
+            "origin": "",
+            "destination": "",
+            "category": "overflight",
+            "route": "TRIVO..WEVIG",
+            "altitude": "55000",
+            "speed": "120",
+            "method": "random",
+            "isAssociated": false,
+            "rate": 3,
+            "airlines": [
+                [
+                    "n",
+                    10
                 ]
             ]
         },

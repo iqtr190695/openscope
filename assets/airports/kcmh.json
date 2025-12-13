@@ -7,6 +7,7 @@
     },
     "icao": "KCMH",
     "iata": "CMH",
+    "sia_static": "28 27 23 22",
     "magnetic_north": -8,
     "ctr_radius": 30,
     "ctr_ceiling": 13000,
