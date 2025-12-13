@@ -38,12 +38,6 @@ export default class SatelliteAirportModel {
     // istanbul ignore next
     constructor(options = {}) {
         /**
-         * @property EventBus
-         * @type {EventBus}
-         */
-        this.eventBus = EventBus;
-
-        /**
          * @property arrivalRunwayModel
          * @type {RunwayModel}
          * @default null

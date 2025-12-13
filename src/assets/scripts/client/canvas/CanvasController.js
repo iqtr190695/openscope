@@ -830,15 +830,16 @@ export default class CanvasController {
      */
     _drawSatelliteAirports(cc) {
 
+        const airportModel = AirportController.airport_get();
+        
         // Need to have satellite airports to draw
-        if (!airportModel.satelliteAirports) {
+        if (!airportModel || !airportModel.satelliteAirports) {
             return;
         }
 
         cc.save();
         this._ccTranslateFromCanvasOriginToAirportCenter(cc);
 
-        const airportModel = AirportController.airport_get();
         const strokeStyle = this.theme.SCOPE.FIX_TEXT;
         
         cc.strokeStyle = strokeStyle;
