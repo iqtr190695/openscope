@@ -3,6 +3,7 @@ import AirportModel from './AirportModel';
 import EventBus from '../lib/EventBus';
 import { EVENT } from '../constants/eventNames';
 import { STORAGE_KEY } from '../constants/storageKeys';
+import random from 'lodash/random';
 
 /**
  * Responsible for maintaining references to all the available airports
@@ -53,6 +54,17 @@ class AirportController {
          * @default null
          */
         this.current = null;
+
+        /**
+         * ATIS code
+         *
+         * Must be null if unset or single upper case letter 'A'-'Z'
+         *
+         * @property current
+         * @type {AirportModel}
+         * @default null
+         */
+        this.currentATISCode = null;
     }
 
     /**
@@ -242,6 +254,45 @@ class AirportController {
      */
     removeAircraftFromAllRunwayQueues(aircraft) {
         this.current.removeAircraftFromAllRunwayQueues(aircraft.id);
+    }
+
+    resetATISCode() {
+        // Random letter A-Z
+        let letter = String.fromCharCode('A'.charCodeAt(0) + random(0, 25));
+        this.currentATISCode = letter;
+    }
+
+    /**
+     * Increments a single letter to the next letter in the English alphabet.
+     * Wraps 'Z' to 'A'
+     *
+     * @param {string} letter The single letter character to increment.
+     * @returns {string} The next letter in the sequence.
+     * @throws {Error} If the input is not a single alphabetical character.
+     */
+    advanceATISCode() {
+        let letter = this.currentATISCode;
+        // 1. Input Validation
+        if (typeof letter !== 'string' || letter.length !== 1 || !/[A-Z]/.test(letter)) {
+            throw new Error("Input must be a single alphabetical character.");
+        }
+    
+        // Get the Unicode code point of the letter
+        const charCode = letter.charCodeAt(0);
+    
+        // 2. Check for Uppercase (A-Z)
+        if (charCode >= 'A'.charCodeAt(0) && charCode <= 'Z'.charCodeAt(0)) {
+            // If 'Z', wrap to 'A'
+            if (letter === 'Z') {
+                return 'A';
+            }
+            // Otherwise, increment the character code
+            return String.fromCharCode(charCode + 1);
+        }
+    
+        // This line should technically be unreachable due to the initial validation,
+        // but it is a fallback for robustness.
+        throw new Error("ATIS must be a single alphabetical character.");
     }
 }
 

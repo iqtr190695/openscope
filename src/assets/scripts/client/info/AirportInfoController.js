@@ -21,13 +21,10 @@ const INFO_VIEW_SELECTORS = {
     WIND_VALUE: '.js-airportInfo-wind-value',
     ALTIMETER_LABEL: '.js-airportInfo-altimeter-label',
     ALTIMETER_VALUE: '.js-airportInfo-altimeter-value',
-    ELEVATION_LABEL: '.js-airportInfo-elevation-label',
-    ELEVATION_VALUE: '.js-airportInfo-elevation-value'
 };
 
 /**
- * Gets information about the current airport, specifically
- * the airport's elevation, wind speed and direction, and altimeter.
+ * SIA
  *
  * @class AirportInfoController
  */
@@ -78,15 +75,6 @@ export default class AirportInfoController {
          * Information div
          *
          * @for AirportInfoController
-         * @property $elevationView
-         * @type {jQuery|HTML element}
-         */
-        this.$elevationView = null;
-
-        /**
-         * Information div
-         *
-         * @for AirportInfoController
          * @property $windView
          * @type {jQuery|HTML element}
          */
@@ -98,13 +86,6 @@ export default class AirportInfoController {
          * @type {Number}
          */
         this.altimeter = INVALID_NUMBER;
-
-        /**
-         * @for AirportInfoController
-         * @property elevation
-         * @type {String}
-         */
-        this.elevation = '';
 
         /**
          * @for AirportInfoController
@@ -153,10 +134,8 @@ export default class AirportInfoController {
         this.$template = $(AIRPORT_INFO_TEMPLATE);
         this.$altimeterView = this.$template.find(INFO_VIEW_SELECTORS.ALTIMETER_VALUE);
         this.$clockView = this.$template.find(INFO_VIEW_SELECTORS.CLOCK_VALUE);
-        this.$elevationView = this.$template.find(INFO_VIEW_SELECTORS.ELEVATION_VALUE);
         this.$windView = this.$template.find(INFO_VIEW_SELECTORS.WIND_VALUE);
         this.altimeter = INVALID_NUMBER;
-        this.elevation = '';
         this.icao = '';
         this.simClockController = new SimClockController();
         this.wind = '';
@@ -231,7 +210,6 @@ export default class AirportInfoController {
         this.$element = null;
         this.$template = null;
         this.altimeter = null;
-        this.elevation = null;
         this.icao = null;
         this.simClockController = null;
         this.wind = null;
@@ -243,19 +221,18 @@ export default class AirportInfoController {
     // ------------------------------ PUBLIC ------------------------------
 
     /**
-     * Updates the information taken from the AirportModel: the wind, the altimeter,
-     * and the elevation. Triggered on airport change.
+     * Updates the information taken from the AirportModel. Triggered on airport change.
      *
      * @for AirportInfoController
      * @method onAirportChange
      */
     onAirportChange() {
         const airport = AirportController.airport_get();
+        AirportController.resetATISCode();
         const windAngle = Math.round(radiansToDegrees(airport.wind.angle));
 
         this.wind = this._buildWindAndGustReadout({ speed: airport.wind.speed, angle: windAngle });
-        this.altimeter = this._generateHighAltimeterReading(airport.wind.speed);
-        this.elevation = `${airport.elevation}`;
+        this.altimeter = this._generateAltimeterReading();
         this.icao = airport.icao.toUpperCase();
 
         this._render();
@@ -305,7 +282,7 @@ export default class AirportInfoController {
         const { angle } = wind;
         const newAngle = leftPad((angle || 360), 3);
         const newSpeed = leftPad(speed, 2);
-        // Creates a fake "gusting" speed
+        // Creates a "gusting" speed
         const gustStrength = speed * Math.random();
         const gustSpeed = leftPad(Math.round(speed + gustStrength), 2);
 
@@ -318,15 +295,16 @@ export default class AirportInfoController {
 
     /**
      * Creates an 'altimeter' reading for the info view
+     * +/- 0.4 around DEFAULT_ALTIMETER_IN_INHG
      *
      * @for AirportInfoController
      * @method _generateHighAltimeterReading
      * @param {Number} windSpeed
-     * @returns {Number} the altimeter value (29.92 or above)
+     * @returns {Number} the altimeter value
      * @private
      */
-    _generateHighAltimeterReading(windSpeed) {
-        const pressure = PERFORMANCE.DEFAULT_ALTIMETER_IN_INHG + (windSpeed * Math.random() / 100);
+    _generateAltimeterReading() {
+        const pressure = PERFORMANCE.DEFAULT_ALTIMETER_IN_INHG + (0.8 * Math.random()) - 0.4;
 
         return pressure.toFixed(2);
     }
@@ -339,8 +317,9 @@ export default class AirportInfoController {
      * @private
      */
     _render() {
-        this.$windView.text(`${this.icao} ${this.wind}`);
-        this.$altimeterView.text(`${this.icao} ${this.altimeter}`);
-        this.$elevationView.text(`${this.icao} ${this.elevation}`);
+        const atisCode = AirportController.currentATISCode;
+        const sia_static = AirportController.current.sia_static;
+        this.$windView.text(`${this.icao} ${this.altimeter} ${this.wind}`);
+        this.$altimeterView.text(`${atisCode} ${sia_static}`);
     }
 }

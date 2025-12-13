@@ -233,15 +233,22 @@ export default class AirportModel {
 
         /**
          * @for AirportModel
+         * @property sia_static
+         * @type {string}
+         */
+        this.sia_static = '';
+
+        /**
+         * @for AirportModel
          * @property ctr_radius
-         * @type {nunmber}
+         * @type {number}
          */
         this.ctr_radius = null;
 
         /**
          * @for AirportModel
          * @property ctr_ceiling
-         * @type {nunmber}
+         * @type {number}
          */
         this.ctr_ceiling = null;
 
@@ -378,6 +385,7 @@ export default class AirportModel {
         this.airac = _get(data, 'airac', this.airac);
         this.radio = _get(data, 'radio', this.radio);
         this.has_terrain = _get(data, 'has_terrain', false);
+        this.sia_static =  _get(data, 'sia_static', this.sia_static);
         this.ctr_radius = _get(data, 'ctr_radius', DEFAULT_CTR_RADIUS_KM);
         this.ctr_ceiling = _get(data, 'ctr_ceiling', DEFAULT_CTR_CEILING_FT);
         this.initial_alt = _get(data, 'initial_alt', DEFAULT_INITIAL_ALTITUDE_FT);
