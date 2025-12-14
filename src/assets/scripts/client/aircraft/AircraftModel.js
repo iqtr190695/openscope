@@ -404,6 +404,15 @@ export default class AircraftModel {
          */
         this.isCyan = false;
 
+        /**
+         * Default scratchpad text
+         *
+         * @for AircraftModel
+         * @property initialScratchpad
+         * @type {string}
+         * @default ''
+         */
+        this.initialScratchpad = '';
 
         /**
          * List of aircraft that MAY be in conflict (bounding box)
@@ -676,6 +685,7 @@ export default class AircraftModel {
         this.speed = data.speed;
         this.origin = _get(data, 'origin', this.origin);
         this.destination = _get(data, 'destination', this.destination);
+        this.initialScratchpad = _get(data, 'scratchpad', this.initialScratchpad);
 
         this.target.altitude = this.altitude;
         this.targetHeading = this.heading;

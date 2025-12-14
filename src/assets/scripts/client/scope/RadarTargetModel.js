@@ -573,7 +573,12 @@ export default class RadarTargetModel {
      * @return {array} [success of operation, system's response]
      */
     setDefaultScratchpad() {
-        if (this.aircraftModel.isDeparture()) {
+        if (!this.aircraftModel) {
+            return;
+        }
+        if (this.aircraftModel.initialScratchpad && this.aircraftModel.initialScratchpad.length > 0) {
+            this.scratchPadText = this.aircraftModel.initialScratchpad;
+        } else if (this.aircraftModel.isDeparture()) {
             this.scratchPadText = this.aircraftModel.fms.getFlightPlanEntry();
         } else {
             this.scratchPadText = this.aircraftModel.destination.substr(1, 3);

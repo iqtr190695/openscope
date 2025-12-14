@@ -21,7 +21,8 @@ const ACCEPTED_OPTIONAL_KEYS = [
     'period',
     'variation',
     'isAssociated',
-    'vfr'
+    'vfr',
+    'scratchpad'
 ];
 
 const ALL_KEYS = [

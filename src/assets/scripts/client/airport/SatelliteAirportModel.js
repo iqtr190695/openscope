@@ -54,9 +54,18 @@ export default class SatelliteAirportModel {
         /**
          * Flag for is an airport has been loaded successfully
          *
+         * @property depict
+         * @type {boolean}
+         * @default true
+         */
+        this.depict = true;
+
+        /**
+         * Flag for is an airport has been loaded successfully
+         *
          * @property loaded
          * @type {boolean}
-         * @default false
+         * @default true
          */
         this.loaded = true;
 
@@ -199,6 +208,7 @@ export default class SatelliteAirportModel {
     init(data) {
         this.name = _get(data, 'name', this.name);
         this.icao = _get(data, 'icao', this.icao).toLowerCase();
+        this.depict = _get(data, 'depict', this.depict);
 
         const mainAirportReference = AirportController.current.positionModel;
         let magNorthInfo = _get(data, 'magnetic_north', NaN);

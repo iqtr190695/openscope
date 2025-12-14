@@ -217,6 +217,15 @@ export default class SpawnPatternModel extends BaseModel {
         this.routeString = '';
 
         /**
+         * Initial scratchpad override
+         *
+         * @property scratchpad
+         * @type {string}
+         * @default ''
+         */
+        this.scratchpad = '';
+
+        /**
          * Object defining runway specific commands to send to an aircraft at spawn time
          *
          * @property commands
@@ -528,6 +537,8 @@ export default class SpawnPatternModel extends BaseModel {
         this.rate = parseFloat(spawnPatternJson.rate);
         this.defaultRate = this.rate;
         this.entrail = _get(spawnPatternJson, 'entrail', this.entrail);
+
+        this.scratchpad = _get(spawnPatternJson, 'scratchpad', this.scratchpad);
 
         this.isVFR = _get(spawnPatternJson, 'isVFR', this.isVFR);
         this.isAssociated = _get(spawnPatternJson, 'isAssociated', this.isAssociated);

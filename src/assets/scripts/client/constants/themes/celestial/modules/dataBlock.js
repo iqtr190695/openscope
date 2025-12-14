@@ -202,7 +202,7 @@ export const DATA_BLOCK_THEME = {
      * @memberof DATA_BLOCK_THEME
      * @property TEXT_FONT
      */
-    TEXT_FONT: '10px monoOne, monospace',
+    TEXT_FONT: '12px monoOne, monospace',
 
     /**
      * Color of text used in the data block

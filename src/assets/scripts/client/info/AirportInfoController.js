@@ -290,7 +290,7 @@ export default class AirportInfoController {
             return `${newAngle} ${newSpeed}`;
         }
 
-        return `${newAngle} ${newSpeed} G${gustSpeed}`;
+        return `${newAngle}@${newSpeed}G${gustSpeed}`;
     }
 
     /**

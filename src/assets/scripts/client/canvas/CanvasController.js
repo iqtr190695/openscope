@@ -775,13 +775,18 @@ export default class CanvasController {
      */
     _drawSingleSatellite(cc, satelliteAirportModel) {
 
+        if (!satelliteAirportModel || !satelliteAirportModel.depict) {
+            return;
+        }
+
         const canvasPosition = CanvasStageModel.calculateRoundedCanvasPositionFromRelativePosition(satelliteAirportModel.relativePosition);
 
         cc.translate(...canvasPosition);
 
-        const airportRadiusKM = 0.3;
+        const airportRadiusKM = 0.8;
+        const airportTickKM = 0.3;
         let airportRadius = CanvasStageModel._translateKilometersToPixels(airportRadiusKM);
-        const airportTick = airportRadius;
+        let airportTick = CanvasStageModel._translateKilometersToPixels(airportTickKM);
         
         // Circle
         cc.beginPath();
