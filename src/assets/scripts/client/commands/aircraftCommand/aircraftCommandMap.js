@@ -65,7 +65,7 @@ export const AIRCRAFT_COMMAND_MAP = {
         isSystemCommand: false
     },
     delete: {
-        aliases: ['del', 'delete', 'kill'],
+        aliases: ['del', 'drop', 'delete', 'kill'],
         functionName: 'runDelete',
         isSystemCommand: false
     },
