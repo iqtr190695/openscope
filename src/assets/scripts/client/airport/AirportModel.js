@@ -239,6 +239,38 @@ export default class AirportModel {
         this.sia_static = '';
 
         /**
+         * Identifier for the sector being worked
+         * 
+         * @for AirportModel
+         * @property workingSectorID
+         * @type {string}
+         */
+        this.workingSectorID = '';
+        
+        // Sector
+        this.sectors = null;
+        this.workingSector = null;
+        this.sectorLookup = null;
+        this.deaultCenterSector = new SectorModel({
+            "sectorID": "C",
+            "symbol": "C",
+            "name": "Center",
+            "publicName": "Aero Center",
+            "frequency": "135.0",
+            "facility": "Center",
+            "isInHouse": false
+        });
+        this.deaultApproachSector = new SectorModel({
+            "sectorID": "A",
+            "symbol": "A",
+            "name": "Approah",
+            "publicName": "Approach",
+            "frequency": "120.0",
+            "facility": "Approach",
+            "isInHouse": true
+        });
+
+        /**
          * @for AirportModel
          * @property ctr_radius
          * @type {number}
@@ -384,6 +416,7 @@ export default class AirportModel {
 
         this.airac = _get(data, 'airac', this.airac);
         this.radio = _get(data, 'radio', this.radio);
+        this.workingSectorID =  _get(data, 'workingSectorID', this.workingSectorID);
         this.has_terrain = _get(data, 'has_terrain', false);
         this.sia_static =  _get(data, 'sia_static', this.sia_static);
         this.ctr_radius = _get(data, 'ctr_radius', DEFAULT_CTR_RADIUS_KM);
@@ -528,9 +561,9 @@ export default class AirportModel {
     }
 
     buildSectors(data) {
-        // Guarantee `sectors` `currentSector` and `sectorLookup` objects exist
+        // Guarantee `sectors` `workingSector` and `sectorLookup` objects exist
         this.sectors = null;
-        this.currentSector = null;
+        this.workingSector = null;
         this.sectorLookup = {};
         if (!data) {
             return;
@@ -541,10 +574,14 @@ export default class AirportModel {
             this.sectorLookup[sector.sectorID] = sector;
             return sector;
         });
-        if (this.sectors.length > 0) {
-            this.currentSector = this.sectors[0];
-            console.log("Current sector set: " + this.currentSector.symbol);
+        if (this.workingSectorID && this.workingSectorID.length > 0) {
+            this.workingSector = this.sectorLookup[this.workingSectorID];
+        } else if (this.sectors.length > 0) {
+            this.workingSector = this.sectors[0];
+        } else {
+            this.workingSector = this.deaultApproachSector;
         }
+        console.log("Working sector set: " + this.workingSector.symbol);
         console.log(this.sectorLookup);
     }
 

@@ -32,7 +32,7 @@ export const RADAR_TARGET_THEME = {
      * @memberof RADAR_TARGET_THEME
      * @property HISTORY_DOT_RADIUS_KM
      */
-    HISTORY_DOT_RADIUS_KM: 0.5,
+    HISTORY_DOT_RADIUS_KM: 1.1,
 
     /**
      * Multiplicative radius factor for each older history dot
@@ -118,7 +118,7 @@ export const RADAR_TARGET_THEME = {
      * @memberof RADAR_TARGET_THEME
      * @property RADIUS_KM
      */
-    RADIUS_KM: 0.8,
+    RADIUS_KM: 1.2,
 
     /**
      * Radius to draw radar targets of aircraft that are currently selected
@@ -126,7 +126,7 @@ export const RADAR_TARGET_THEME = {
      * @memberof RADAR_TARGET_THEME
      * @property RADIUS_SELECTED_KM
      */
-    RADIUS_SELECTED_KM: 1.0,
+    RADIUS_SELECTED_KM: 1.5,
 
     /**
      * Color of conflict rings (shown to warn you of possible issue)

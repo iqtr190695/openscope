@@ -298,13 +298,17 @@ export default class AirportInfoController {
      * +/- 0.4 around DEFAULT_ALTIMETER_IN_INHG
      *
      * @for AirportInfoController
-     * @method _generateHighAltimeterReading
-     * @param {Number} windSpeed
-     * @returns {Number} the altimeter value
+     * @method _generateAltimeterReading
+     * @returns {number} the altimeter value
      * @private
      */
     _generateAltimeterReading() {
-        const pressure = PERFORMANCE.DEFAULT_ALTIMETER_IN_INHG + (0.8 * Math.random()) - 0.4;
+        // Scale over 0.4 * [0, 1] * [0, 1] to make values near DEFAULT_ALTIMETER_IN_INHG more likely
+        let offset = 0.4 * Math.random() * Math.random();
+        if (Math.random() > 0.5) {
+            offset = -offset;
+        }
+        const pressure = PERFORMANCE.DEFAULT_ALTIMETER_IN_INHG + offset;
 
         return pressure.toFixed(2);
     }

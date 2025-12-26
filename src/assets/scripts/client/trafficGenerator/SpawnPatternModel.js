@@ -426,6 +426,15 @@ export default class SpawnPatternModel extends BaseModel {
          */
         this.isAssociated = true;
 
+        /**
+         * Initial SectorModel, represented by sectorID, owning the target
+         *
+         * @property isAssociated
+         * @type {string}
+         * @default null
+         */
+        this.initialOwnerID = null;
+
         this.init(spawnPatternJson);
     }
 
@@ -542,6 +551,7 @@ export default class SpawnPatternModel extends BaseModel {
 
         this.isVFR = _get(spawnPatternJson, 'isVFR', this.isVFR);
         this.isAssociated = _get(spawnPatternJson, 'isAssociated', this.isAssociated);
+        this.initialOwnerID = _get(spawnPatternJson, 'owner', this.initialOwnerID);
 
         this._routeModel = new RouteModel(spawnPatternJson.route);
         this.cycleStartTime = 0;

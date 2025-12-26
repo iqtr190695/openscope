@@ -22,7 +22,8 @@ const ACCEPTED_OPTIONAL_KEYS = [
     'variation',
     'isAssociated',
     'vfr',
-    'scratchpad'
+    'scratchpad',
+    'owner'
 ];
 
 const ALL_KEYS = [

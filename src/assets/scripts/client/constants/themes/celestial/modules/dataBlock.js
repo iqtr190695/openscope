@@ -186,7 +186,7 @@ export const DATA_BLOCK_THEME = {
      * @memberof DATA_BLOCK_THEME
      * @type {number}
      */
-    LEADER_PADDING_FROM_TARGET_PX: 0,
+    LEADER_PADDING_FROM_TARGET_PX: 5,
 
     /**
      * Number of characters of scratchpad to show in data block
@@ -194,7 +194,7 @@ export const DATA_BLOCK_THEME = {
      * @memberof DATA_BLOCK_THEME
      * @type {number}
      */
-    SCRATCHPAD_CHARACTER_LIMIT: 5,
+    SCRATCHPAD_CHARACTER_LIMIT: 3,
 
     /**
      * Font and size of text used in the data block

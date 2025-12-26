@@ -342,7 +342,7 @@ export default class RadarTargetModel {
     }
 
     get isInFlash() {
-        if (this._receivingSector && this._receivingSector == AirportController.current.currentSector) {
+        if (this._receivingSector && this._receivingSector == AirportController.current.workingSector) {
             // 'We' are being flashed the target as the receiving sector
             return true;
         }
@@ -369,10 +369,19 @@ export default class RadarTargetModel {
         this._dataBlockLeaderDirection = this._theme.DATA_BLOCK.LEADER_DIRECTION;
         this._dataBlockLeaderLength = this._theme.DATA_BLOCK.LEADER_LENGTH;
 
+        const apc = AirportController.current;
+
         if (aircraftModel.category == FLIGHT_CATEGORY.DEPARTURE) {
-            this._owningSector = AirportController.current.currentSector;
+            this._owningSector = apc.workingSector;
+            this._receivingSector = null;
         } else {
-            this._receivingSector = AirportController.current.currentSector;
+            if (aircraftModel.initialOwnerID && apc.sectorLookup[aircraftModel.initialOwnerID]) {
+                this._owningSector = apc.sectorLookup[aircraftModel.initialOwnerID];
+            } else {
+                // Assign default center sector
+                this._owningSector = apc.deaultCenterSector;
+            }
+            this._receivingSector = apc.workingSector;
         }
 
         this.setDefaultScratchpad();
@@ -459,10 +468,10 @@ export default class RadarTargetModel {
      * @return {array} [success of operation, system's response]
      */
     inferHandoff() {
-        if (this._owningSector && this._owningSector == AirportController.current.currentSector && this._receivingSector != null) {
+        if (this._owningSector && this._owningSector == AirportController.current.workingSector && this._receivingSector != null) {
             this.cancelHandoff();
             return [true, 'CANCEL HANDOFF'];
-        } else if (this._receivingSector && this._receivingSector == AirportController.current.currentSector) {
+        } else if (this._receivingSector && this._receivingSector == AirportController.current.workingSector) {
             this._owningSector = this._receivingSector;
             this._receivingSector = null;
             this.aircraftModel.transferCommunications();

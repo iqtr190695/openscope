@@ -398,6 +398,9 @@ export default class TrafficRateController {
      * @param event
      */
     _onChangeFlightCategoryRate(event) {
+        if (this._elements == null || this._elements.length == 0) {
+            return;
+        }
         const $target = $(event.target);
         const $output = $target.next(`.${CLASSNAMES.FORM_VALUE}`);
         const value = $target.val();

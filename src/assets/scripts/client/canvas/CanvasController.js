@@ -1253,10 +1253,22 @@ export default class CanvasController {
         }
 
         // Draw the radar target (aka aircraft position dot)
+        let radiusPx = CanvasStageModel._translateKilometersToPixels(radarTargetRadiusKm);
         cc.fillStyle = this.theme.RADAR_TARGET.RADAR_TARGET;
         cc.beginPath();
-        cc.arc(0, 0, CanvasStageModel._translateKilometersToPixels(radarTargetRadiusKm), 0, tau());
+        cc.arc(0, 0, radiusPx, 0, tau());
         cc.fill();
+
+        const fontSize = round(radiusPx * 1.8);
+        if (fontSize > 2.0) {
+            const textColor = this.theme.DATA_BLOCK.TEXT_IN_RANGE;
+            const symbol = radarTargetModel.symbol;
+            cc.font = `${fontSize}px monoOne, monospace`;
+            cc.fillStyle = textColor;
+            cc.textAlign = 'center';
+            cc.textBaseline = 'middle';
+            cc.fillText(symbol, 0.0, 0.0);
+        }
 
         cc.restore();
     }
@@ -1296,6 +1308,7 @@ export default class CanvasController {
         cc.moveTo(0, 0);
         cc.lineTo(screenPositionOffsetX, -screenPositionOffsetY);
         cc.stroke();
+
         cc.restore();
     }
 
@@ -1614,6 +1627,12 @@ export default class CanvasController {
             match = true;
         }
 
+        let radarTargetRadiusKm = this.theme.RADAR_TARGET.RADIUS_KM;
+        if (match) {
+            radarTargetRadiusKm = this.theme.RADAR_TARGET.RADIUS_SELECTED_KM;
+        }
+        const radiusPx = CanvasStageModel._translateKilometersToPixels(radarTargetRadiusKm);
+
         // Various factors for text color...
         let textColor = this.theme.DATA_BLOCK.TEXT_IN_RANGE;
         if (aircraftModel.isCyan) {
@@ -1669,18 +1688,21 @@ export default class CanvasController {
         const radarTargetPosition = CanvasStageModel.calculateRoundedCanvasPositionFromRelativePosition(
             aircraftModel.relativePosition
         );
+        const startOffset = radiusPx + this.theme.DATA_BLOCK.LEADER_PADDING_FROM_TARGET_PX;
         const leaderLength = this._calculateLeaderLength(radarTargetModel.dataBlockLeaderLength);
+        const endOffset = radiusPx + this.theme.DATA_BLOCK.LEADER_PADDING_FROM_TARGET_PX + leaderLength - this.theme.DATA_BLOCK.LEADER_PADDING_FROM_BLOCK_PX;
+        const intersectOffset = startOffset + leaderLength;
         const leaderStart = [
-            radarTargetPosition[0] + (offsetComponent[0] * this.theme.DATA_BLOCK.LEADER_PADDING_FROM_TARGET_PX),
-            radarTargetPosition[1] + (offsetComponent[1] * this.theme.DATA_BLOCK.LEADER_PADDING_FROM_TARGET_PX)
+            radarTargetPosition[0] + (offsetComponent[0] * startOffset),
+            radarTargetPosition[1] + (offsetComponent[1] * startOffset)
         ];
         const leaderEnd = [
-            radarTargetPosition[0] + offsetComponent[0] * (leaderLength - this.theme.DATA_BLOCK.LEADER_PADDING_FROM_BLOCK_PX),
-            radarTargetPosition[1] + offsetComponent[1] * (leaderLength - this.theme.DATA_BLOCK.LEADER_PADDING_FROM_BLOCK_PX)
+            radarTargetPosition[0] + offsetComponent[0] * endOffset,
+            radarTargetPosition[1] + offsetComponent[1] * endOffset
         ];
         const leaderIntersectionWithBlock = [
-            radarTargetPosition[0] + offsetComponent[0] * leaderLength,
-            radarTargetPosition[1] + offsetComponent[1] * leaderLength
+            radarTargetPosition[0] + offsetComponent[0] * intersectOffset,
+            radarTargetPosition[1] + offsetComponent[1] * intersectOffset
         ];
 
         cc.beginPath();
@@ -1693,7 +1715,7 @@ export default class CanvasController {
 
         cc.translate(...dataBlockCenterCanvasPosition);
 
-        this._drawLegacyDatablock(cc, aircraftModel);
+        // this._drawLegacyDatablock(cc, aircraftModel);
 
         // height of TOTAL vertical space between the rows (0 for touching)
         const gap = 3;
@@ -1720,7 +1742,6 @@ export default class CanvasController {
         cc.fillStyle = textColor;
         cc.fillText(row1text, x, -gap / 2 - lineheight);
         cc.fillText(row2text, x, gap / 2 + lineheight);
-        cc.font = BASE_CANVAS_FONT;
 
         cc.restore();
     }

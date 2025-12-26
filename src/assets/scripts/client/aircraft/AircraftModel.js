@@ -416,6 +416,16 @@ export default class AircraftModel {
         this.initialScratchpad = '';
 
         /**
+         * Sector ID for initial owner, to be looked up via AirportController
+         *
+         * @for AircraftModel
+         * @property initialOwnerID
+         * @type {string}
+         * @default ''
+         */
+        this.initialOwnerID = '';
+
+        /**
          * List of aircraft that MAY be in conflict (bounding box)
          *
          * @for AircraftModel
@@ -694,6 +704,7 @@ export default class AircraftModel {
         this.origin = _get(data, 'origin', this.origin);
         this.destination = _get(data, 'destination', this.destination);
         this.initialScratchpad = _get(data, 'scratchpad', this.initialScratchpad);
+        this.initialOwnerID = _get(data, 'owner', this.initialOwnerID);
 
         this.target.altitude = this.altitude;
         this.targetHeading = this.heading;

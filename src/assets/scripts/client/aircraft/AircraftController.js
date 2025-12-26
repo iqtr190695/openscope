@@ -652,6 +652,7 @@ export default class AircraftController {
             routeString: spawnPatternModel.routeString,
             commands: spawnPatternModel.commands,
             scratchpad: spawnPatternModel.scratchpad,
+            owner: spawnPatternModel.initialOwnerID,
             // TODO: this may not be needed anymore
             waypoints: _get(spawnPatternModel, 'waypoints', [])
         };
