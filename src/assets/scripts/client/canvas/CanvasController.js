@@ -1620,32 +1620,25 @@ export default class CanvasController {
             textColor = this.theme.DATA_BLOCK.TEXT_CYAN;
         } else {
             if (match) {
-                if (radarTargetModel.isInHandoff) {
+                if (radarTargetModel.isInFlash) {
                     if (_inRange(TimeKeeper.gameTimeMilliseconds % 1000, 500, 1000)) {
                         textColor = this.theme.DATA_BLOCK.TEXT_SELECTED;
                     } else {
                         textColor = this.theme.DATA_BLOCK.TEXT_DARKFLASH;
                     }
                 } else {
-                    if (radarTargetModel._owningSector == AirportController.current.currentSector) {
-                        textColor = this.theme.DATA_BLOCK.TEXT_SELECTED;
-                    } else {
-                        textColor = this.theme.DATA_BLOCK.TEXT_OUT_OF_RANGE;
-                    }
+                    textColor = this.theme.DATA_BLOCK.TEXT_IN_RANGE;
                 }
             } else {
-                if (radarTargetModel.isInHandoff) {
+                if (radarTargetModel.isInFlash) {
                     if (_inRange(TimeKeeper.gameTimeMilliseconds % 1000, 500, 1000)) {
                         textColor = this.theme.DATA_BLOCK.TEXT_IN_RANGE;
                     } else {
                         textColor = this.theme.DATA_BLOCK.TEXT_DARKFLASH;
                     }
                 } else {
-                    if (radarTargetModel._owningSector == AirportController.current.currentSector) {
-                        textColor = this.theme.DATA_BLOCK.TEXT_IN_RANGE;
-                    } else {
-                        textColor = this.theme.DATA_BLOCK.TEXT_OUT_OF_RANGE;
-                    }
+                    textColor = this.theme.DATA_BLOCK.TEXT_IN_RANGE;
+                    // textColor = this.theme.DATA_BLOCK.TEXT_OUT_OF_RANGE;
                 }
             }
             if (aircraftModel.isControllable) {

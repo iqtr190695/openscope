@@ -77,6 +77,7 @@ import {
     TIME
 } from '../constants/globalConstants';
 import { ENVIRONMENT } from '../constants/environmentConstants';
+import random from 'lodash/random';
 
 /**
  * @property FLIGHT_RULES
@@ -1283,6 +1284,7 @@ export default class AircraftModel {
                 this.pilotVoice
             );
         }
+        this.hasCalledUp = true;
     }
 
     /**
@@ -2775,11 +2777,16 @@ export default class AircraftModel {
 
         //this.isControllable = isInsideAirspace;
         // this.callUp();
-        this.hasCalledUp = true;
 
         // TODO: Handle exit some other way
         // this.setIsRemovable();
         // EventBus.trigger(AIRCRAFT_EVENT.AIRSPACE_EXIT, this);
+    }
+
+    transferCommunications() {
+        setTimeout(() => {
+            this.callUp()
+        }, random(2000.0, 10000.0));
     }
 
     /**

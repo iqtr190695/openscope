@@ -132,9 +132,6 @@ export default class ScopeModel {
         if (!radarTargetModel) {
             return [false, 'Radar target error'];
         }
-        if (!radarTargetModel.isInHandoff) {
-            return [true, null];
-        }
         return radarTargetModel.inferHandoff();
     }
 

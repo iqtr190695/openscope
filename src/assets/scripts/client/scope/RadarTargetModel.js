@@ -19,8 +19,9 @@ import {
     WAKE_TURBULENCE_CATEGORY
  } from '../constants/aircraftConstants';
 import SectorModel from '../airport/SectorModel';
-import isNil from 'lodash/isNil';
 import AirportController from '../airport/AirportController';
+import random from 'lodash/random';
+import TimeKeeper from '../engine/TimeKeeper';
 
 /**
  * A single radar target observed by the radar system and shown on the scope
@@ -185,6 +186,15 @@ export default class RadarTargetModel {
         this._isRF = false;
 
         /**
+         * If target is OD (opposite direction)
+         *
+         * @for RadarTargetModel
+         * @property _isOD
+         * @type {boolean}
+         */
+        this._isOD = false;
+
+        /**
          * A 3 character (or less) alphanumeric string that is shown in the data block
          * The scratchpad is used for controller shorthand notes and other purposes
          *
@@ -203,6 +213,24 @@ export default class RadarTargetModel {
          * @type {string}
          */
         this._scratchPadPlusText = '';
+
+        /**
+         * Timeout id if set, controls handoff acceptance
+         *
+         * @for RadarTargetModel
+         * @property _handoffTimeoutID
+         * @type {number}
+         */
+        this._handoffTimeoutID = INVALID_NUMBER;
+
+        /**
+         * Flash timeout in game seconds
+         *
+         * @for RadarTargetModel
+         * @property _handoffTimeoutID
+         * @type {number}
+         */
+        this._flashExpiryTime = INVALID_NUMBER;
 
         /**
          * Active theme
@@ -313,8 +341,16 @@ export default class RadarTargetModel {
         return symbol;
     }
 
-    get isInHandoff() {
-        return !isNil(this._receivingSector);
+    get isInFlash() {
+        if (this._receivingSector && this._receivingSector == AirportController.current.currentSector) {
+            // 'We' are being flashed the target as the receiving sector
+            return true;
+        }
+        if (this._flashExpiryTime != INVALID_NUMBER && this._flashExpiryTime > TimeKeeper.gameTimeMilliseconds) {
+            // We are within 10s since handoff accepted by new sector
+            return true;
+        }
+        return false;
     }
 
     /**
@@ -387,11 +423,16 @@ export default class RadarTargetModel {
         this._hasSuppressedDataBlock = false;
         this._assignedAltitude = INVALID_NUMBER;
         this._owningSector = null;
+
+        cancelHandoff();
         this._receivingSector = null;
+        this._flashExpiryTime = INVALID_NUMBER;
+
         this._isCA = false;
         this._isLA = false;
         this._isEM = false;
         this._isRF = false;
+        this._isOD = false;
 
         return this;
     }
@@ -418,29 +459,58 @@ export default class RadarTargetModel {
      * @return {array} [success of operation, system's response]
      */
     inferHandoff() {
-        if (this.isInHandoff) {
-            if (this._owningSector == AirportController.current.currentSector) {
-                this._receivingSector = null;
-                return [true, 'CANCEL HANDOFF'];
-            } else if (this._receivingSector == AirportController.current.currentSector) {
-                this._owningSector = this._receivingSector;
-                this._receivingSector = null;
-                return [true, 'ACCEPT HANDOFF'];
-            } else {
-                // No handoff action needed
-                return [true, null];
-            }
+        if (this._owningSector && this._owningSector == AirportController.current.currentSector && this._receivingSector != null) {
+            this.cancelHandoff();
+            return [true, 'CANCEL HANDOFF'];
+        } else if (this._receivingSector && this._receivingSector == AirportController.current.currentSector) {
+            this._owningSector = this._receivingSector;
+            this._receivingSector = null;
+            this.aircraftModel.transferCommunications();
+            return [true, 'ACCEPT HANDOFF'];
         }
-        return [false, 'Not in handoff status'];
+        // No handoff action needed
+        return [true, null];
     }
 
     handoffTo(sector) {
         let sectorModel = AirportController.current.sectorLookup[sector];
         if (!sectorModel) {
+            // The app shouldn't get here because InputController will infer scratchpad entry before an imaginary sector
+            // But if called directly, return false and the reason
             return [false, ('Sector ' + sector + ' is unrecognized')];
         }
         this._receivingSector = sectorModel;
+        this._handoffTimeoutID = setTimeout(() => {
+            this.handoffAccepted()
+        }, random(2000.0, 10000.0));
         return [true, ('HANDOFF ' + sector)];
+    }
+
+    cancelHandoff() {
+        if (this._handoffTimeoutID != INVALID_NUMBER) {
+            clearTimeout(this._handoffTimeoutID);
+            this._handoffTimeoutID = INVALID_NUMBER;
+            this._flashExpiryTime = INVALID_NUMBER;
+            this._receivingSector = null; // Cancel the handoff
+        }
+    }
+
+
+    /**
+     * Finalize handoff
+     * Generally called by timeout set by `handoffTo`
+     *
+     * @for RadarTargetModel
+     * @param altitude {number}
+     * @return {array} [success of operation, system's response]
+     */
+    handoffAccepted() {
+        if (this._receivingSector) {
+            this._owningSector = this._receivingSector;
+        }
+        this._flashExpiryTime = TimeKeeper.gameTimeMilliseconds + 10000;
+        this._handoffTimeoutID = INVALID_NUMBER;
+        this._receivingSector = null;
     }
 
     /**
