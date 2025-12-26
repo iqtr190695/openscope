@@ -517,7 +517,7 @@ export default class RadarTargetModel {
         if (this._receivingSector) {
             this._owningSector = this._receivingSector;
         }
-        this._flashExpiryTime = TimeKeeper.gameTimeMilliseconds + 10000;
+        this._flashExpiryTime = TimeKeeper.gameTimeMilliseconds + 20000;
         this._handoffTimeoutID = INVALID_NUMBER;
         this._receivingSector = null;
     }
