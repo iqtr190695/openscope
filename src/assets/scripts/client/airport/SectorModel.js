@@ -31,11 +31,8 @@ export default class SectorModel extends BaseModel {
     constructor(sectorObject) {
         super();
 
-        //sectorID, symbol, name, publicName = name, frequency, facility, lineID = '', isInHouse = false
-
         /**
          * Sector identifier
-         * Future use TBD, can be symbol or name
          *
          * @for SectorModel
          * @property sectorID
@@ -48,8 +45,7 @@ export default class SectorModel extends BaseModel {
         }
 
         /**
-         * Sector identifier
-         * Future use TBD, can be symbol or name
+         * Symbol - single character
          *
          * @for SectorModel
          * @property symbol
@@ -57,7 +53,7 @@ export default class SectorModel extends BaseModel {
          * @default []
          */
         this.symbol = _get(sectorObject, "symbol");
-        if (!_isString(this.symbol)) {
+        if (!_isString(this.symbol) || this.symbol.length > 1) {
             throw new TypeError('Invalid symbol: ' + this.symbol);
         }
 

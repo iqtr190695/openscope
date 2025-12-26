@@ -14,8 +14,13 @@ import {
     DATA_BLOCK_POSITION_MAP
 } from '../constants/scopeConstants';
 import { THEME } from '../constants/themes';
-import { WAKE_TURBULENCE_CATEGORY } from '../constants/aircraftConstants';
+import {
+    FLIGHT_CATEGORY,
+    WAKE_TURBULENCE_CATEGORY
+ } from '../constants/aircraftConstants';
 import SectorModel from '../airport/SectorModel';
+import isNil from 'lodash/isNil';
+import AirportController from '../airport/AirportController';
 
 /**
  * A single radar target observed by the radar system and shown on the scope
@@ -123,28 +128,61 @@ export default class RadarTargetModel {
          */
         this._assignedAltitude = INVALID_NUMBER;
 
-        // TODO: This will be replaced with `this._sectorInControl` or something
-        // when handoffs become possible. For now, just marking whether or not "we"
-        // are the sector with control of the track.
-        /**
-         * Boolean value representing whether the track of this target is under
-         * control of this particular scope.
-         *
-         * @for RadarTargetModel
-         * @property _isUnderOurControl
-         * @type {boolean}
-         */
-        this._isUnderOurControl = true;
-
         /**
          * SectorModel owner of associated target
          * Null if not associated
          *
          * @for RadarTargetModel
-         * @property sectorInControl
+         * @property _owningSector
          * @type {SectorModel}
          */
-        this.sectorInControl = null;
+        this._owningSector = null;
+
+        /**
+         * SectorModel receiving handoff
+         * isFlashing will be true if set, else false
+         *
+         * @for RadarTargetModel
+         * @property _receivingSector
+         * @type {SectorModel}
+         */
+        this._receivingSector = null;
+
+        /**
+         * If target is in a conflict
+         *
+         * @for RadarTargetModel
+         * @property _isCA
+         * @type {boolean}
+         */
+        this._isCA = false;
+
+        /**
+         * If target has 'low altitude'
+         *
+         * @for RadarTargetModel
+         * @property _isLA
+         * @type {boolean}
+         */
+        this._isLA = false;
+
+        /**
+         * If target is emergency
+         *
+         * @for RadarTargetModel
+         * @property _isEM
+         * @type {boolean}
+         */
+        this._isEM = false;
+
+        /**
+         * If target has radio failure
+         *
+         * @for RadarTargetModel
+         * @property _isRF
+         * @type {boolean}
+         */
+        this._isRF = false;
 
         /**
          * A 3 character (or less) alphanumeric string that is shown in the data block
@@ -267,6 +305,18 @@ export default class RadarTargetModel {
         return this._haloRadius > 0;
     }
 
+    get symbol() {
+        let symbol = this.DEFAULT_SYMBOL;
+        if (this._owningSector) {
+            symbol = this._owningSector.symbol;
+        }
+        return symbol;
+    }
+
+    get isInHandoff() {
+        return !isNil(this._receivingSector);
+    }
+
     /**
      * Complete initialization tasks
      *
@@ -282,6 +332,12 @@ export default class RadarTargetModel {
         this._cruiseAltitude = aircraftModel.fms.flightPlanAltitude;
         this._dataBlockLeaderDirection = this._theme.DATA_BLOCK.LEADER_DIRECTION;
         this._dataBlockLeaderLength = this._theme.DATA_BLOCK.LEADER_LENGTH;
+
+        if (aircraftModel.category == FLIGHT_CATEGORY.DEPARTURE) {
+            this._owningSector = AirportController.current.currentSector;
+        } else {
+            this._receivingSector = AirportController.current.currentSector;
+        }
 
         this.setDefaultScratchpad();
 
@@ -330,8 +386,12 @@ export default class RadarTargetModel {
         this._haloRadius = INVALID_NUMBER;
         this._hasSuppressedDataBlock = false;
         this._assignedAltitude = INVALID_NUMBER;
-        this._isUnderOurControl = true;
-        this.symbol = this.DEFAULT_SYMBOL;
+        this._owningSector = null;
+        this._receivingSector = null;
+        this._isCA = false;
+        this._isLA = false;
+        this._isEM = false;
+        this._isRF = false;
 
         return this;
     }
@@ -347,6 +407,40 @@ export default class RadarTargetModel {
         this._cruiseAltitude = altitude;
 
         return [true, 'AMEND ALTITUDE'];
+    }
+
+    /**
+     * Accept handoff if receiving, else take it back
+     * (Infer refers to either acceptance or takeback based on context)
+     *
+     * @for RadarTargetModel
+     * @param altitude {number}
+     * @return {array} [success of operation, system's response]
+     */
+    inferHandoff() {
+        if (this.isInHandoff) {
+            if (this._owningSector == AirportController.current.currentSector) {
+                this._receivingSector = null;
+                return [true, 'CANCEL HANDOFF'];
+            } else if (this._receivingSector == AirportController.current.currentSector) {
+                this._owningSector = this._receivingSector;
+                this._receivingSector = null;
+                return [true, 'ACCEPT HANDOFF'];
+            } else {
+                // No handoff action needed
+                return [true, null];
+            }
+        }
+        return [false, 'Not in handoff status'];
+    }
+
+    handoffTo(sector) {
+        let sectorModel = AirportController.current.sectorLookup[sector];
+        if (!sectorModel) {
+            return [false, ('Sector ' + sector + ' is unrecognized')];
+        }
+        this._receivingSector = sectorModel;
+        return [true, ('HANDOFF ' + sector)];
     }
 
     /**
@@ -430,30 +524,6 @@ export default class RadarTargetModel {
         const leaderEndToBlockCenter = blockCenterOffset[this.dataBlockLeaderDirection];
 
         return vadd(leaderIntersectionWithBlock, leaderEndToBlockCenter);
-    }
-
-    /**
-    * Mark this radar target as NOT being controlled by "our" ScopeModel
-    * Note that this will eventually be reworked so we can specify which
-    * scope has control, not just whether or not "we" do.
-    *
-    * @for RadarTargetModel
-    * @method markAsNotOurControl
-    */
-    markAsNotOurControl() {
-        this._isUnderOurControl = false;
-    }
-
-    /**
-     * Mark this radar target as being controlled by "our" ScopeModel
-     * Note that this will eventually be reworked so we can specify which
-     * scope has control, not just whether or not "we" do.
-     *
-     * @for RadarTargetModel
-     * @method markAsOurControl
-     */
-    markAsOurControl() {
-        this._isUnderOurControl = true;
     }
 
     /**

@@ -13,7 +13,7 @@ export const COLOR = {
     CYAN: 'rgba(0, 255, 255, 1.0)',
     CYAN_05: 'rgba(0, 255, 255, 0.5)',
     GRAY_LIGHT: 'rgba(224, 224, 224, 1.0)',
-    GRAY: 'rgba(150, 150, 150, 1)',
+    GRAY: 'rgba(150, 150, 150, 1.0)',
     GREEN_02: 'rgba(76, 118, 97, 0.2)',
     GREEN_05: 'rgba(76, 118, 97, 0.5)',
     GREEN_09: 'rgba(76, 118, 97, 0.9)',

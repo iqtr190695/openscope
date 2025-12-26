@@ -1185,7 +1185,10 @@ export default class CanvasController {
             let radiusFactor = this.theme.RADAR_TARGET.HISTORY_DOT_SHRINK_FACTOR;
             let radiusKM = this.theme.RADAR_TARGET.HISTORY_DOT_RADIUS_KM;
             if (radiusFactor) {
-                let j = this.theme.RADAR_TARGET.HISTORY_LENGTH - Math.max(i, 10);
+                let j = this.theme.RADAR_TARGET.HISTORY_LENGTH - i;
+                if (j < 0) {
+                    j = 0;
+                }
                 radiusKM *= radiusFactor ** j;
             }
 
@@ -1296,45 +1299,6 @@ export default class CanvasController {
         cc.restore();
     }
 
-    // TODO: This is currently not working correctly and not in use
-    /**
-     * Draw dashed line from last coordinate of future track through
-     * any later requested fixes.
-     *
-     * POSITIONING: Before calling this method, translate to the AIRPORT CENTER
-     *
-     * @for CanvasController
-     * @method canvas_draw_future_track_fixes
-     * @param cc {HTMLCanvasContext}
-     * @param aircraft {AircraftModel}
-     * @param future_track
-     * @returns undefined
-     */
-    canvas_draw_future_track_fixes(/* cc, aircraft, future_track */) {
-        // const waypointList = aircraft.fms.waypoints;
-
-        // if (waypointList.length <= 1) {
-        //     return;
-        // }
-
-        // const start = future_track.length - 1;
-        // const [x, y] = CanvasStageModel.calculateRoundedCanvasPositionFromRelativePosition(future_track[start]);
-
-        // cc.beginPath();
-        // cc.moveTo(x, y);
-        // cc.setLineDash([3, 10]);
-
-        // for (let i = 0; i < waypointList.length; i++) {
-        //     const [fx, fy] = CanvasStageModel.calculateRoundedCanvasPositionFromRelativePosition(
-        //         waypointList[i].relativePosition
-        //     );
-
-        //     cc.lineTo(fx, fy);
-        // }
-
-        // cc.stroke();
-    }
-
     /**
      * Run physics updates into the future, draw future track
      *
@@ -1422,9 +1386,6 @@ export default class CanvasController {
         }
 
         cc.stroke();
-
-        // TODO: following method not in use, leaving for posterity
-        // this.canvas_draw_future_track_fixes(cc, twin, future_track);
 
         cc.restore();
     }
@@ -1646,19 +1607,51 @@ export default class CanvasController {
         cc.save();
 
         const paddingLR = 5;
-        let match = false;
 
-        // Callsign Matching
+        // Is the radar target selected?
+        let match = false;
         if (prop.input.callsign.length > 0 && aircraftModel.matchCallsign(prop.input.callsign)) {
             match = true;
         }
 
-        let textColor = aircraftModel.isCyan ? this.theme.DATA_BLOCK.TEXT_CYAN : 
-            (aircraftModel.isControllable ? this.theme.DATA_BLOCK.TEXT_IN_RANGE :
-            this.theme.DATA_BLOCK.TEXT_OUT_OF_RANGE);
-
-        if (!aircraftModel.isCyan && match) {
-            textColor = this.theme.DATA_BLOCK.TEXT_SELECTED;
+        // Various factors for text color...
+        let textColor = this.theme.DATA_BLOCK.TEXT_IN_RANGE;
+        if (aircraftModel.isCyan) {
+            textColor = this.theme.DATA_BLOCK.TEXT_CYAN;
+        } else {
+            if (match) {
+                if (radarTargetModel.isInHandoff) {
+                    if (_inRange(TimeKeeper.gameTimeMilliseconds % 1000, 500, 1000)) {
+                        textColor = this.theme.DATA_BLOCK.TEXT_SELECTED;
+                    } else {
+                        textColor = this.theme.DATA_BLOCK.TEXT_DARKFLASH;
+                    }
+                } else {
+                    if (radarTargetModel._owningSector == AirportController.current.currentSector) {
+                        textColor = this.theme.DATA_BLOCK.TEXT_SELECTED;
+                    } else {
+                        textColor = this.theme.DATA_BLOCK.TEXT_OUT_OF_RANGE;
+                    }
+                }
+            } else {
+                if (radarTargetModel.isInHandoff) {
+                    if (_inRange(TimeKeeper.gameTimeMilliseconds % 1000, 500, 1000)) {
+                        textColor = this.theme.DATA_BLOCK.TEXT_IN_RANGE;
+                    } else {
+                        textColor = this.theme.DATA_BLOCK.TEXT_DARKFLASH;
+                    }
+                } else {
+                    if (radarTargetModel._owningSector == AirportController.current.currentSector) {
+                        textColor = this.theme.DATA_BLOCK.TEXT_IN_RANGE;
+                    } else {
+                        textColor = this.theme.DATA_BLOCK.TEXT_OUT_OF_RANGE;
+                    }
+                }
+            }
+            if (aircraftModel.isControllable) {
+            } else {
+                //textColor = this.theme.DATA_BLOCK.TEXT_OUT_OF_RANGE;
+            }
         }
 
         cc.textBaseline = 'middle';
@@ -1721,13 +1714,19 @@ export default class CanvasController {
             row2text = radarTargetModel.buildDataBlockRowTwoPrimaryInfo();
         }
 
-        cc.fillStyle = textColor;
-
         // Draw full datablock text
         cc.font = this.theme.DATA_BLOCK.TEXT_FONT;
         cc.textAlign = 'left';
-        cc.fillText(row1text, -this.theme.DATA_BLOCK.HALF_WIDTH + paddingLR, -gap / 2 - lineheight);
-        cc.fillText(row2text, -this.theme.DATA_BLOCK.HALF_WIDTH + paddingLR, gap / 2 + lineheight);
+        const x = -this.theme.DATA_BLOCK.HALF_WIDTH + paddingLR
+
+        // Line 0 (if present)
+        // cc.fillStyle = this.theme.DATA_BLOCK.TEXT_LINE_0;
+        // cc.fillText("EM/LA/RF", x, -gap / 2 - lineheight - lineheight - gap * 2);
+
+
+        cc.fillStyle = textColor;
+        cc.fillText(row1text, x, -gap / 2 - lineheight);
+        cc.fillText(row2text, x, gap / 2 + lineheight);
         cc.font = BASE_CANVAS_FONT;
 
         cc.restore();

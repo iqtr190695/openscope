@@ -37,7 +37,6 @@ ava('initializes correctly when called to instantiate with correct parameters', 
     t.true(model._haloRadius === INVALID_NUMBER);
     t.true(model._hasSuppressedDataBlock === false);
     t.true(model._assignedAltitude === INVALID_NUMBER);
-    t.true(model._isUnderOurControl === true);
     t.true(model._scratchPadText === 'LAS');
     t.true(model._theme === THEME.DEFAULT);
 });
@@ -75,22 +74,6 @@ ava('.amendAltitude() sets #_cruiseAltitude to the specified altitude', (t) => {
 
     t.deepEqual(response, expectedResponse);
     t.true(model._cruiseAltitude === newAltitude);
-});
-
-ava('.markAsNotOurControl() sets #_isUnderOurControl to false', (t) => {
-    const model = new RadarTargetModel(THEME.DEFAULT, ARRIVAL_AIRCRAFT_MODEL_MOCK);
-
-    model.markAsNotOurControl();
-
-    t.false(model._isUnderOurControl);
-});
-
-ava('.markAsOurControl() sets #_isUnderOurControl to false', (t) => {
-    const model = new RadarTargetModel(THEME.DEFAULT, ARRIVAL_AIRCRAFT_MODEL_MOCK);
-
-    model.markAsOurControl();
-
-    t.true(model._isUnderOurControl);
 });
 
 ava('.moveDataBlock() returns syntax error when no arguments provided', (t) => {

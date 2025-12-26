@@ -842,7 +842,9 @@ export default class InputController {
         const [successful, response] = this._scopeModel.runScopeCommand(scopeCommandModel);
         const isWarning = !successful;
 
-        UiController.ui_log(response, isWarning);
+        if (response != null) {
+            UiController.ui_log(response, isWarning);
+        }
     }
 
     /**

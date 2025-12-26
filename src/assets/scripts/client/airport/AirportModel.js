@@ -528,16 +528,24 @@ export default class AirportModel {
     }
 
     buildSectors(data) {
+        // Guarantee `sectors` `currentSector` and `sectorLookup` objects exist
+        this.sectors = null;
+        this.currentSector = null;
+        this.sectorLookup = {};
         if (!data) {
             return;
         }
         console.log("Build sectors called");
-        console.log(data);
         this.sectors = data.map((sectorObject) => {
             const sector = new SectorModel(sectorObject);
+            this.sectorLookup[sector.sectorID] = sector;
             return sector;
         });
-        console.log(this.sectors);
+        if (this.sectors.length > 0) {
+            this.currentSector = this.sectors[0];
+            console.log("Current sector set: " + this.currentSector.symbol);
+        }
+        console.log(this.sectorLookup);
     }
 
     buildSatelliteAirports(data) {
@@ -545,7 +553,6 @@ export default class AirportModel {
             return;
         }
         console.log("Build satellite airports called");
-        console.log(data);
         this.satelliteAirports = data.map((satAirportObj) => {
             const sector = new SatelliteAirportModel(satAirportObj);
             return sector;

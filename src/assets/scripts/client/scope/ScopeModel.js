@@ -8,6 +8,7 @@ import { EVENT } from '../constants/eventNames';
 import { GAME_OPTION_NAMES } from '../constants/gameOptionConstants';
 import { THEME } from '../constants/themes';
 import { DECIMAL_RADIX } from '../utilities/unitConverters';
+import isNil from 'lodash/isNil';
 
 /**
  * Scope belonging to a Player
@@ -122,15 +123,19 @@ export default class ScopeModel {
     /**
      * Accept a pending handoff from another sector
      *
-     * NOTE: This is just a placeholder for future use, hence why the params are commented out
-     *
      * @for ScopeModel
      * @method acceptHandoff
      * @param radarTargetModel {RadarTargetModel}
      * @return result {array} [success of operation, system's response]
      */
-    acceptHandoff(/* radarTargetModel */) {
-        return [false, 'acceptHandoff command not yet available'];
+    inferHandoff(radarTargetModel) {
+        if (!radarTargetModel) {
+            return [false, 'Radar target error'];
+        }
+        if (!radarTargetModel.isInHandoff) {
+            return [true, null];
+        }
+        return radarTargetModel.inferHandoff();
     }
 
     /**
@@ -210,8 +215,11 @@ export default class ScopeModel {
      * @param sectorCode {string} the handoff code for the receiving sector
      * @return result {array} [success of operation, system's response]
      */
-    initiateHandoff(/* radarTargetModel, sectorCode */) {
-        return [false, 'initiateHandoff command not yet available'];
+    initiateHandoff(radarTargetModel, sectorCode) {
+        if (isNil(radarTargetModel)) {
+            return [false, 'Radar target unknown'];
+        }
+        return radarTargetModel.handoffTo(sectorCode);
     }
 
     /**

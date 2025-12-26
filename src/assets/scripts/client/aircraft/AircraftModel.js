@@ -392,7 +392,7 @@ export default class AircraftModel {
          * @type {boolean}
          * @default false
          */
-        this.isControllable = false;
+        this.isControllable = true;
 
         /**
          * Whether aircraft has been marked blue/cyan by the controller
@@ -507,6 +507,13 @@ export default class AircraftModel {
          * @type {Fms}
          */
         this.fms = new Fms(options);
+
+        /**
+         * @for AircraftModel
+         * @property hasCalledUp
+         * @type {boolean}
+         */
+        this.hasCalledUp = false;
 
         /**
          * @for AircraftModel
@@ -692,7 +699,7 @@ export default class AircraftModel {
         this.target.speed = this.speed;
 
         // This assumes and arrival spawns outside the airspace
-        this.isControllable = data.category === FLIGHT_CATEGORY.DEPARTURE;
+        //this.isControllable = data.category === FLIGHT_CATEGORY.DEPARTURE;
     }
 
     /**
@@ -2390,7 +2397,7 @@ export default class AircraftModel {
     }
 
     /**
-     * This turns the aircraft if it is not on the ground and has not arived at its destenation
+     * This turns the aircraft if it is not on the ground and has not arrived
      *
      * @for AircraftModel
      * @method updateAircraftTurnPhysics
@@ -2672,13 +2679,6 @@ export default class AircraftModel {
 
                             const isWarning = true;
                             UiController.ui_log(`${this.callsign} collided with terrain in controlled flight`, isWarning);
-                            speech_say(
-                                [
-                                    { type: 'callsign', content: this },
-                                    { type: 'text', content: ', we\'re going down!' }
-                                ],
-                                this.pilotVoice
-                            );
 
                             GameController.events_recordNew(GAME_EVENTS.COLLISION);
                         }
@@ -2761,42 +2761,25 @@ export default class AircraftModel {
         delete this.conflicts[conflictingAircraft.callsign];
     }
 
-    // TODO: needs better name
-    /**
-     * @for AircraftModel
-     * @method _contactAircraftAfterControllabilityChange
-     * @private
-     */
-    _contactAircraftAfterControllabilityChange() {
-        // Crossing into the center
-        if (this.isControllable) {
-            this.callUp();
-
-            return;
-        }
-
-        this.setIsRemovable();
-        EventBus.trigger(AIRCRAFT_EVENT.AIRSPACE_EXIT, this);
-    }
-
     /**
      * @for AircraftModel
      * @method _updateAircraftControllability
      * @private
      */
     _updateAircraftControllability() {
-        if (this.projected) {
+        if (this.projected || this.hasCalledUp) {
             return;
         }
 
-        const isInsideAirspace = this.isInsideAirspace(AirportController.airport_get());
+        //const isInsideAirspace = this.isInsideAirspace(AirportController.airport_get());
 
-        if (this.isControllable === isInsideAirspace) {
-            return;
-        }
+        //this.isControllable = isInsideAirspace;
+        // this.callUp();
+        this.hasCalledUp = true;
 
-        this.isControllable = isInsideAirspace;
-        this._contactAircraftAfterControllabilityChange();
+        // TODO: Handle exit some other way
+        // this.setIsRemovable();
+        // EventBus.trigger(AIRCRAFT_EVENT.AIRSPACE_EXIT, this);
     }
 
     /**

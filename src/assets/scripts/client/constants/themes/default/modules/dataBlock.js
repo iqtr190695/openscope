@@ -232,12 +232,28 @@ export const DATA_BLOCK_THEME = {
     TEXT_SELECTED: COLOR.WHITE,
 
     /**
+     * Color of text used in the data block when flashing
+     *
+     * @memberof DATA_BLOCK_THEME
+     * @property TEXT_DARKFLASH
+     */
+    TEXT_DARKFLASH: COLOR.GRAY,
+
+    /**
      * Color of text used in the data block when cyan'd
      *
      * @memberof DATA_BLOCK_THEME
      * @property TEXT_CYAN
      */
     TEXT_CYAN: COLOR.CYAN,
+
+    /**
+     * Color for "EM" "RF" "LA" etc... on line 0 (if present)
+     *
+     * @memberof TEXT_LINE_0
+     * @property TEXT_CYAN
+     */
+    TEXT_LINE_0: COLOR.RED,
 
     /**
      * Width of the data block

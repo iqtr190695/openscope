@@ -10,9 +10,7 @@ import {
     COMMAND_FUNCTIONS
 } from './scopeCommandMap';
 import { DATA_BLOCK_DIRECTION_LENGTH_SEPARATOR } from '../../constants/scopeConstants';
-
-// TODO: Replace dummy sector codes with a proper `SectorCollection`
-const SECTOR_HANDOFF_CODES = ['C', 'Z', 'M', 'X'];
+import AirportController from '../../airport/AirportController';
 
 /**
  * A command to be interpreted by the scope itself
@@ -113,7 +111,7 @@ export default class ScopeCommandModel {
             return EXPLICIT_COMMANDS[firstElement];
         }
 
-        if (SECTOR_HANDOFF_CODES.indexOf(firstElement) !== -1) {
+        if (_has(AirportController.current.sectorLookup, firstElement)) {
             return COMMAND_FUNCTIONS.INITIATE_HANDOFF;
         }
 
@@ -125,7 +123,7 @@ export default class ScopeCommandModel {
         }
 
         if (command.length === 1) {
-            return COMMAND_FUNCTIONS.ACCEPT_HANDOFF;
+            return COMMAND_FUNCTIONS.INFER_HANDOFF;
         }
 
         return COMMAND_FUNCTIONS.SCRATCHPAD;

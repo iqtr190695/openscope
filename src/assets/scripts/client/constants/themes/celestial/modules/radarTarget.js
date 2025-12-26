@@ -40,7 +40,7 @@ export const RADAR_TARGET_THEME = {
      * @memberof RADAR_TARGET_THEME
      * @property HISTORY_DOT_SHRINK_FACTOR
      */
-    HISTORY_DOT_SHRINK_FACTOR: 0.92,
+    HISTORY_DOT_SHRINK_FACTOR: 0.95,
 
     /**
      * Number of history dots to display behind the aircraft
