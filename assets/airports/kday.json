@@ -6,8 +6,9 @@
         "dep": "Columbus Departure"
     },
     "icao": "KDAY",
-    "iata": "DAY",
+    "icao": "KDAY",
     "sia_static": "24 23 22",
+    "workingSectorID": "M",
     "magnetic_north": -7,
     "ctr_radius": 50,
     "ctr_ceiling": 13000,
@@ -22031,6 +22032,7 @@
             "speed": "320",
             "method": "random",
             "scratchpad": "DAY",
+            "owner": "C34",
             "rate": 2,
             "airlines": [
                 [
@@ -22056,6 +22058,7 @@
             "speed": "320",
             "method": "random",
             "scratchpad": "DAY",
+            "owner": "C32",
             "rate": 2,
             "airlines": [
                 [
@@ -22081,6 +22084,7 @@
             "speed": "320",
             "method": "random",
             "scratchpad": "DAY",
+            "owner": "C22",
             "rate": 2,
             "airlines": [
                 [
@@ -22106,6 +22110,7 @@
             "speed": "320",
             "method": "random",
             "scratchpad": "DAY",
+            "owner": "N",
             "rate": 6,
             "airlines": [
                 [
@@ -22219,6 +22224,7 @@
             "speed": "120",
             "method": "random",
             "scratchpad": "AOH",
+            "owner": "61L",
             "isAssociated": false,
             "rate": 3,
             "airlines": [
@@ -22237,6 +22243,7 @@
             "speed": "280",
             "method": "random",
             "scratchpad": "CMH",
+            "owner": "C31",
             "rate": 3,
             "airlines": [
                 [
@@ -22285,6 +22292,7 @@
             "altitude": "26000",
             "speed": "280",
             "scratchpad": "CMH",
+            "owner": "C34",
             "method": "random",
             "rate": 3,
             "airlines": [
@@ -22363,6 +22371,69 @@
             "frequency": "134.45",
             "facility": "Columbus",
             "isInHouse": true
+        },
+        {
+            "sectorID": "X",
+            "symbol": "X",
+            "name": "Xenia",
+            "publicName": "Columbus Approach",
+            "frequency": "134.45",
+            "facility": "Columbus",
+            "isInHouse": true
+        },
+        {
+            "sectorID": "2",
+            "symbol": "2",
+            "name": "Cleveland",
+            "publicName": "Cleveland Approach",
+            "frequency": "128.35",
+            "facility": "Cleveland",
+            "isInHouse": false
+        },
+        {
+            "sectorID": "3",
+            "symbol": "3",
+            "name": "Toledo",
+            "publicName": "Toledo Approach",
+            "frequency": "132.35",
+            "facility": "Toledo",
+            "isInHouse": false
+        },
+        {
+            "sectorID": "4",
+            "symbol": "4",
+            "name": "Fort Wayne",
+            "publicName": "Fort Wayne Approach",
+            "frequency": "127.2",
+            "facility": "Fort Wayne",
+            "isInHouse": false
+        },
+        {
+            "sectorID": "5",
+            "symbol": "5",
+            "name": "Indy",
+            "publicName": "Indianapolis Approach",
+            "frequency": "124.95",
+            "facility": "Indy",
+            "isInHouse": false
+        },
+        {
+            "sectorID": "61L",
+            "symbol": "6",
+            "name": "Satellite",
+            "publicName": "Cincy Approach",
+            "frequency": "121.0",
+            "facility": "Cincy",
+            "isInHouse": false
+        },
+        {
+            "sectorID": "61W",
+            "symbol": "6",
+            "name": "Wildcat",
+            "publicName": "Cincy Approach",
+            "frequency": "126.65",
+            "facility": "Cincy",
+            "isInHouse": false
         },
         {
             "sectorID": "X",

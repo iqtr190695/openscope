@@ -8,6 +8,7 @@
     "icao": "KCMH",
     "iata": "CMH",
     "sia_static": "28 27 23 22",
+    "workingSectorID": "N",
     "magnetic_north": -8,
     "ctr_radius": 30,
     "ctr_ceiling": 13000,
@@ -22746,6 +22747,24 @@
     ],
     "sectors": [
         {
+            "sectorID": "N",
+            "symbol": "N",
+            "name": "North",
+            "publicName": "Columbus Approach",
+            "frequency": "125.95",
+            "facility": "Columbus",
+            "isInHouse": true
+        },
+        {
+            "sectorID": "S",
+            "symbol": "S",
+            "name": "South",
+            "publicName": "Columbus Approach",
+            "frequency": "134.0",
+            "facility": "Columbus",
+            "isInHouse": true
+        },
+        {
             "sectorID": "M",
             "symbol": "M",
             "name": "Middletown",
@@ -22762,6 +22781,69 @@
             "frequency": "134.45",
             "facility": "Columbus",
             "isInHouse": true
+        },
+        {
+            "sectorID": "X",
+            "symbol": "X",
+            "name": "Xenia",
+            "publicName": "Columbus Approach",
+            "frequency": "134.45",
+            "facility": "Columbus",
+            "isInHouse": true
+        },
+        {
+            "sectorID": "D2",
+            "symbol": "2",
+            "name": "Cleveland",
+            "publicName": "Cleveland Approach",
+            "frequency": "128.35",
+            "facility": "Cleveland",
+            "isInHouse": false
+        },
+        {
+            "sectorID": "D3",
+            "symbol": "3",
+            "name": "Toledo",
+            "publicName": "Toledo Approach",
+            "frequency": "132.35",
+            "facility": "Toledo",
+            "isInHouse": false
+        },
+        {
+            "sectorID": "D4",
+            "symbol": "4",
+            "name": "Fort Wayne",
+            "publicName": "Fort Wayne Approach",
+            "frequency": "127.2",
+            "facility": "Fort Wayne",
+            "isInHouse": false
+        },
+        {
+            "sectorID": "D5",
+            "symbol": "5",
+            "name": "Indy",
+            "publicName": "Indianapolis Approach",
+            "frequency": "124.95",
+            "facility": "Indy",
+            "isInHouse": false
+        },
+        {
+            "sectorID": "61L",
+            "symbol": "6",
+            "name": "Satellite",
+            "publicName": "Cincy Approach",
+            "frequency": "121.0",
+            "facility": "Cincy",
+            "isInHouse": false
+        },
+        {
+            "sectorID": "61W",
+            "symbol": "6",
+            "name": "Wildcat",
+            "publicName": "Cincy Approach",
+            "frequency": "126.65",
+            "facility": "Cincy",
+            "isInHouse": false
         },
         {
             "sectorID": "X",
