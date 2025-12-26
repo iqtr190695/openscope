@@ -4,8 +4,7 @@
     "callsign": {
         "name": "Air Transport",
         "callsignFormats": [
-            "###",
-            "####"
+            "3###"
         ]
     },
     "fleets": {

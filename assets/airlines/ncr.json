@@ -1,0 +1,15 @@
+{
+    "icao": "ncr",
+    "name": "NATIONAL CARGO",
+    "callsign": {
+        "name": "National Cargo",
+        "callsignFormats": [
+            "###"
+        ]
+    },
+    "fleets": {
+        "default": [
+            ["B744", 9]
+        ]
+    }
+}

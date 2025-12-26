@@ -82,10 +82,6 @@ export default class RadarTargetModel {
          */
         this._eventBus = EventBus;
 
-        // TODO: This will later be expanded upon such that aircraft may exist in
-        // the simulation without necessarily having full data blocks. An example
-        // of this would be VFR traffic with a partial or altitude-only data block.
-        // For now, assuming all aircraft in existence have an editable data block.
         /**
          * Boolean value representing whether the aircraft has a full data block.
          * This is opposed to a partial (PDB), limited (LDB), or other non-full state.
@@ -122,10 +118,10 @@ export default class RadarTargetModel {
          * The altitude (soft) assigned in the data block
          *
          * @for RadarTargetModel
-         * @property _interimAltitude
+         * @property _assignedAltitude
          * @type {number}
          */
-        this._interimAltitude = INVALID_NUMBER;
+        this._assignedAltitude = INVALID_NUMBER;
 
         // TODO: This will be replaced with `this._sectorInControl` or something
         // when handoffs become possible. For now, just marking whether or not "we"
@@ -140,32 +136,15 @@ export default class RadarTargetModel {
          */
         this._isUnderOurControl = true;
 
-        // TODO: This will be replaced with `this._sectorInControl` or something
-        // when handoffs become possible. For now, just marking whether or not "we"
-        // are the sector with control of the track.
         /**
-         * Boolean value representing whether the track of this target is under
-         * control of this particular scope.
+         * SectorModel owner of associated target
+         * Null if not associated
          *
          * @for RadarTargetModel
-         * @property _isUnderOurControl
+         * @property sectorInControl
          * @type {SectorModel}
          */
         this.sectorInControl = null;
-
-
-        // TODO: Store the aircraft's initial route here. Yes, we want to intentionally
-        // make a copy of the route and store it here, not point to the aircraft's route.
-        // When the aircraft is told to fly a new route, this property should still show
-        // the old route, until the controller updates it in the scope.
-        /**
-         * The flight plan route for the aircraft associated with this radar target
-         *
-         * @for RadarTargetModel
-         * @property _routeString
-         * @type {string}
-         */
-        this._routeString = '';
 
         /**
          * A 3 character (or less) alphanumeric string that is shown in the data block
@@ -303,7 +282,6 @@ export default class RadarTargetModel {
         this._cruiseAltitude = aircraftModel.fms.flightPlanAltitude;
         this._dataBlockLeaderDirection = this._theme.DATA_BLOCK.LEADER_DIRECTION;
         this._dataBlockLeaderLength = this._theme.DATA_BLOCK.LEADER_LENGTH;
-        this._routeString = aircraftModel.fms.getRouteString();
 
         this.setDefaultScratchpad();
 
@@ -351,10 +329,9 @@ export default class RadarTargetModel {
         this._hasFullDataBlock = true;
         this._haloRadius = INVALID_NUMBER;
         this._hasSuppressedDataBlock = false;
-        this._interimAltitude = INVALID_NUMBER;
+        this._assignedAltitude = INVALID_NUMBER;
         this._isUnderOurControl = true;
         this.symbol = this.DEFAULT_SYMBOL;
-        this._routeString = '';
 
         return this;
     }

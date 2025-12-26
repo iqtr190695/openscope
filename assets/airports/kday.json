@@ -21252,6 +21252,73 @@
     ],
     "satellites": [
   {
+    "name": "Portland Municipal",
+    "icao": "PLD",
+    "rwys": [
+      "9",
+      "27"
+    ],
+    "position": [
+      40.4515175,
+      -84.9917178,
+      925
+    ]
+  },
+  {
+    "name": "Van Wert County",
+    "icao": "VNW",
+    "rwys": [
+      "9",
+      "27"
+    ],
+    "position": [
+      40.8639403,
+      -84.6079639,
+      787
+    ]
+  },
+  {
+    "name": "Bluffton",
+    "icao": "5G7",
+    "rwys": [
+      "5",
+      "23"
+    ],
+    "position": [
+      40.8854444,
+      -83.8686389,
+      851
+    ]
+  },
+  {
+    "name": "Findlay",
+    "icao": "FDY",
+    "rwys": [
+      "7",
+      "18",
+      "25",
+      "36"
+    ],
+    "position": [
+      41.0120278,
+      -83.6686111,
+      813
+    ]
+  },
+  {
+    "name": "Putnam County",
+    "icao": "OWX",
+    "rwys": [
+      "9",
+      "27"
+    ],
+    "position": [
+      41.0355950,
+      -83.9818936,
+      764
+    ]
+  },
+  {
     "name": "Dayton/Phillipsburg",
     "icao": "3I7",
     "rwys": [
