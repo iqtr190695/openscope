@@ -110,9 +110,8 @@ export default class Fms {
          */
         this.departureRunwayModel = null;
 
-        // TODO: This value should NOT be changed 'as ATC amends it'
         /**
-         * Altitude expected for this flight. Will change as ATC amends it.
+         * Altitude expected for this flight.
          *
          * @property flightPlanAltitude
          * @type {number}
