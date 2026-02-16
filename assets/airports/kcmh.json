@@ -22001,10 +22001,10 @@
             "icao": "DUBLN1",
             "name": "Dublin One",
             "entryPoints": {
-                "BRYEN": [["BRYEN", "A230-"], "CHDRS", "IKALE"],
-                "ESSIE": [["ESSIE", "A100"]],
+                "BRYEN": [["BRYEN", "A230-"], "CHDRS", ["IKALE", "A140"]],
+                "ESSIE": [["ESSIE", "A140"]],
                 "FBC": ["FBC", ["ESSIE", "A100"]],
-                "JADUB": [["JADUB", "A240+"], "CYRAH", "IKALE"]
+                "JADUB": [["JADUB", "A240+"], "CYRAH", ["IKALE", "A140"]]
             },
             "body": [
                 "MELZZ"
@@ -22508,6 +22508,7 @@
             "speed": "340",
             "method": "random",
             "scratchpad": "CMH",
+            "owner": "Z04",
             "rate": 1,
             "airlines": [
                 [
@@ -22557,6 +22558,7 @@
             "speed": "280",
             "method": "random",
             "scratchpad": "CMH",
+            "owner": "C24",
             "rate": 4,
             "airlines": [
                 [
@@ -22606,6 +22608,7 @@
             "speed": "280",
             "method": "random",
             "scratchpad": "CMH",
+            "owner": "C24",
             "rate": 1,
             "airlines": [
                 [
@@ -22655,6 +22658,7 @@
             "speed": "300",
             "method": "random",
             "scratchpad": "CMH",
+            "owner": "C31",
             "rate": 3,
             "airlines": [
                 [
@@ -22704,6 +22708,7 @@
             "speed": "300",
             "method": "random",
             "scratchpad": "CMH",
+            "owner": "M",
             "rate": 3,
             "airlines": [
                 [
@@ -22828,7 +22833,7 @@
             "isInHouse": false
         },
         {
-            "sectorID": "61L",
+            "sectorID": "D6",
             "symbol": "6",
             "name": "Satellite",
             "publicName": "Cincy Approach",
@@ -22837,7 +22842,7 @@
             "isInHouse": false
         },
         {
-            "sectorID": "61W",
+            "sectorID": "D61W",
             "symbol": "6",
             "name": "Wildcat",
             "publicName": "Cincy Approach",

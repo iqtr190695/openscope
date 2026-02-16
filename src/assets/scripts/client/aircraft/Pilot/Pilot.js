@@ -139,7 +139,7 @@ export default class Pilot {
 
         if (shouldUseSoftCeiling && clampedAltitude === airportModel.maxAssignableAltitude) {
             // causes aircraft to 'leave' airspace, and continue climb through ceiling
-            clampedAltitude += 1;
+            clampedAltitude = altitude;
         }
 
         this.cancelApproachClearance(aircraftModel);

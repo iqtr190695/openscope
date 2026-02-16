@@ -93,6 +93,10 @@ const ZERO_ARG_AIRCRAFT_COMMANDS = {
         validate: zeroArgumentsValidator,
         parse: noop
     },
+    contactCenter: {
+        validate: zeroArgumentsValidator,
+        parse: noop
+    },
     delete: {
         validate: zeroArgumentsValidator,
         parse: noop

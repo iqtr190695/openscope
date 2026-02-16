@@ -489,14 +489,9 @@ export default class AircraftModel {
             turn: null,
             speed: 0
         };
-
-        // TODO: Move all target properties here in order to utilize getters/setters
-        // this._targetAltitude = 0;
-        // this._targetAltitudeExpedite = false;
+        
         this._targetHeading = null;
         this._targetGroundTrack = null;
-        // this._targetTurnDirection = null;
-        // this._targetIndicatedAirspeed = 0;
 
         /**
          * @for AircraftModel
@@ -542,7 +537,6 @@ export default class AircraftModel {
         this.parse(options);
 
         const airport = AirportController.airport_get();
-        // const initialRunway = airport.getActiveRunwayForCategory(this.category);
 
         if (this.category === FLIGHT_CATEGORY.DEPARTURE) {
             this.setFlightPhase(FLIGHT_PHASE.APRON);
@@ -615,6 +609,19 @@ export default class AircraftModel {
     set targetGroundTrack(groundTrack) {
         this._targetGroundTrack = groundTrack;
         this._targetHeading = null;
+    }
+
+    /**
+     * @for AircraftModel
+     * @property callsign
+     * @return {string}
+     */
+    get requestedAltitude() {
+        let flightPlanAltitude = 60000; // there should always be an FMS altitude, but have 60,000 just in case
+        if (this.fms.flightPlanAltitude !== INVALID_NUMBER) {
+            flightPlanAltitude = this.fms.flightPlanAltitude;
+        }
+        return flightPlanAltitude;
     }
 
     /**
@@ -729,14 +736,10 @@ export default class AircraftModel {
      */
     getViewModel() {
         let assignedAltitude = '-';
-        let flightPlanAltitude = '-';
+        let flightPlanAltitude = this.requestedAltitude * UNIT_CONVERSION_CONSTANTS.FT_FL;
 
         if (this.mcp.altitude !== INVALID_NUMBER) {
             assignedAltitude = Math.round(this.mcp.altitude) * UNIT_CONVERSION_CONSTANTS.FT_FL;
-        }
-
-        if (this.fms.flightPlanAltitude !== INVALID_NUMBER) {
-            flightPlanAltitude = this.fms.flightPlanAltitude * UNIT_CONVERSION_CONSTANTS.FT_FL;
         }
 
         return {
@@ -1109,7 +1112,7 @@ export default class AircraftModel {
      * @method isStopped
      */
     isStopped() {
-        // TODO: enumerate the magic number.
+        // TODO: enumerate the magic speed.
         return this.isOnGround() && this.speed < 5;
     }
 
@@ -1253,6 +1256,9 @@ export default class AircraftModel {
     /**
      * @for AircraftModel
      * @method callUp
+     * 
+     * May be called from `transferCommunications` for arrival/enroute
+     * Or on contact for departure
      */
     callUp() {
         let alt_log;
@@ -2787,7 +2793,9 @@ export default class AircraftModel {
         //const isInsideAirspace = this.isInsideAirspace(AirportController.airport_get());
 
         //this.isControllable = isInsideAirspace;
-        // this.callUp();
+        if (this.category === FLIGHT_CATEGORY.DEPARTURE && this.isAirborne) {
+            this.callUp();
+        }
 
         // TODO: Handle exit some other way
         // this.setIsRemovable();

@@ -286,6 +286,31 @@ export default class AircraftCommander {
     }
 
     /**
+     * @for AircraftCommander
+     * @method runContactCenter
+     * @param aircraft {AircraftModel}
+     * @param data {array}
+     */
+    runContactCenter(aircraft, data) {
+        const airport = AirportController.airport_get();
+
+        // Climb to requested (target) altitude
+        let output =  aircraft.pilot.maintainAltitude(
+            aircraft.requestedAltitude,
+            false, // not expediting
+            true, // soft ceiling
+            airport,
+            aircraft
+        );
+        if (output) {
+            return [true, "Contact center, good day"];
+        } else {
+            return [false, "Climb command error"];
+        }
+    }
+
+
+    /**
      * Setup the Fms to enter a holding pattern,
      *
      * Can be used to hold at:

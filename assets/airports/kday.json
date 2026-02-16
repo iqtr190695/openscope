@@ -22382,7 +22382,7 @@
             "isInHouse": true
         },
         {
-            "sectorID": "2",
+            "sectorID": "21",
             "symbol": "2",
             "name": "Cleveland",
             "publicName": "Cleveland Approach",
@@ -22391,7 +22391,7 @@
             "isInHouse": false
         },
         {
-            "sectorID": "3",
+            "sectorID": "31",
             "symbol": "3",
             "name": "Toledo",
             "publicName": "Toledo Approach",
@@ -22400,7 +22400,7 @@
             "isInHouse": false
         },
         {
-            "sectorID": "4",
+            "sectorID": "41",
             "symbol": "4",
             "name": "Fort Wayne",
             "publicName": "Fort Wayne Approach",
@@ -22409,7 +22409,7 @@
             "isInHouse": false
         },
         {
-            "sectorID": "5",
+            "sectorID": "51",
             "symbol": "5",
             "name": "Indy",
             "publicName": "Indianapolis Approach",
@@ -22434,15 +22434,6 @@
             "frequency": "126.65",
             "facility": "Cincy",
             "isInHouse": false
-        },
-        {
-            "sectorID": "X",
-            "symbol": "X",
-            "name": "Xenia",
-            "publicName": "Columbus Approach",
-            "frequency": "134.45",
-            "facility": "Columbus",
-            "isInHouse": true
         },
         {
             "sectorID": "C30",
