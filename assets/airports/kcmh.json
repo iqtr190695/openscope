@@ -22188,7 +22188,7 @@
             "body": [
                 [
                     "CLPRR",
-                    "A120-"
+                    "A110"
                 ],
                 "HWKNG"
             ],
@@ -22311,6 +22311,7 @@
             "altitude": "",
             "speed": "",
             "method": "random",
+            "rate": 4,
             "scratchpad": "E",
             "rate": 4,
             "airlines": [
@@ -22360,6 +22361,7 @@
             "altitude": "",
             "speed": "",
             "method": "random",
+            "rate": 5,
             "scratchpad": "W",
             "rate": 4,
             "airlines": [
@@ -22409,6 +22411,7 @@
             "altitude": "",
             "speed": "",
             "method": "random",
+            "rate": 5,
             "scratchpad": "S",
             "rate": 4,
             "airlines": [
@@ -22458,6 +22461,7 @@
             "altitude": "",
             "speed": "",
             "method": "random",
+            "rate": 5,
             "scratchpad": "N",
             "rate": 4,
             "airlines": [
@@ -22557,6 +22561,7 @@
             "altitude": "24000",
             "speed": "280",
             "method": "random",
+            "rate": 2,
             "scratchpad": "CMH",
             "owner": "C24",
             "rate": 4,
@@ -22603,10 +22608,11 @@
             "origin": "",
             "destination": "KCMH",
             "category": "arrival",
-            "route": "ZANDR.CLPRR3.KCMH28L",
+            "route": "MCGNS.SCRLT2.KCMH28L",
             "altitude": "24000",
             "speed": "280",
             "method": "random",
+            "rate": 2,
             "scratchpad": "CMH",
             "owner": "C24",
             "rate": 1,
@@ -22642,10 +22648,50 @@
                 [
                     "ual/short",
                     8
+                ]
+            ]
+        },
+        {
+            "origin": "",
+            "destination": "KCMH",
+            "category": "arrival",
+            "route": "AIR.CLPRR3.KCMH28L",
+            "altitude": "24000",
+            "speed": "340",
+            "method": "random",
+            "rate": 1,
+            "airlines": [
+                [
+                    "eny",
+                    5
                 ],
                 [
-                    "fdx",
-                    1
+                    "n/fastGA",
+                    15
+                ],
+                [
+                    "rpa",
+                    15
+                ],
+                [
+                    "skw",
+                    2
+                ],
+                [
+                    "swa",
+                    33
+                ],
+                [
+                    "aal/short",
+                    12
+                ],
+                [
+                    "dal/short",
+                    10
+                ],
+                [
+                    "ual/short",
+                    8
                 ]
             ]
         },
@@ -22657,6 +22703,7 @@
             "altitude": "28000",
             "speed": "300",
             "method": "random",
+            "rate": 2,
             "scratchpad": "CMH",
             "owner": "C31",
             "rate": 3,
@@ -22692,10 +22739,34 @@
                 [
                     "ual/short",
                     8
+                ]
+            ]
+        },
+        {
+            "origin": "",
+            "destination": "KCMH",
+            "category": "arrival",
+            "route": "ESSIE.DUBLN1.KCMH28L",
+            "altitude": "14000",
+            "speed": "320",
+            "method": "random",
+            "rate": 1,
+            "airlines": [
+                [
+                    "eny",
+                    5
                 ],
                 [
-                    "fdx",
-                    1
+                    "n/fastGA",
+                    10
+                ],
+                [
+                    "rpa",
+                    15
+                ],
+                [
+                    "skw",
+                    2
                 ]
             ]
         },
@@ -22742,10 +22813,6 @@
                 [
                     "ual/short",
                     8
-                ],
-                [
-                    "fdx",
-                    1
                 ]
             ]
         }
