@@ -22096,7 +22096,7 @@
                 ],
                 [
                     "JAKTZ",
-                    "A160-|A100+"
+                    "A120"
                 ]
             ],
             "rwy": {
@@ -22363,7 +22363,6 @@
             "method": "random",
             "rate": 5,
             "scratchpad": "W",
-            "rate": 4,
             "airlines": [
                 [
                     "eny",
@@ -22396,10 +22395,6 @@
                 [
                     "ual/short",
                     8
-                ],
-                [
-                    "fdx",
-                    1
                 ]
             ]
         },
@@ -22413,7 +22408,6 @@
             "method": "random",
             "rate": 5,
             "scratchpad": "S",
-            "rate": 4,
             "airlines": [
                 [
                     "eny",
@@ -22446,10 +22440,6 @@
                 [
                     "ual/short",
                     8
-                ],
-                [
-                    "fdx",
-                    1
                 ]
             ]
         },
@@ -22463,7 +22453,6 @@
             "method": "random",
             "rate": 5,
             "scratchpad": "N",
-            "rate": 4,
             "airlines": [
                 [
                     "eny",
@@ -22496,10 +22485,6 @@
                 [
                     "ual/short",
                     8
-                ],
-                [
-                    "fdx",
-                    1
                 ]
             ]
         },
@@ -22561,10 +22546,9 @@
             "altitude": "24000",
             "speed": "280",
             "method": "random",
-            "rate": 2,
             "scratchpad": "CMH",
             "owner": "C24",
-            "rate": 4,
+            "rate": 3,
             "airlines": [
                 [
                     "eny",
@@ -22597,10 +22581,6 @@
                 [
                     "ual/short",
                     8
-                ],
-                [
-                    "fdx",
-                    1
                 ]
             ]
         },
@@ -22612,10 +22592,9 @@
             "altitude": "24000",
             "speed": "280",
             "method": "random",
-            "rate": 2,
+            "rate": 3,
             "scratchpad": "CMH",
             "owner": "C24",
-            "rate": 1,
             "airlines": [
                 [
                     "eny",
@@ -22699,11 +22678,60 @@
             "origin": "",
             "destination": "KCMH",
             "category": "arrival",
+            "route": "BRYEN.DUBLN1.KCMH28L",
+            "altitude": "28000",
+            "speed": "300",
+            "method": "random",
+            "scratchpad": "CMH",
+            "owner": "C31",
+            "rate": 3,
+            "airlines": [
+                [
+                    "asa/transcon",
+                    5
+                ],
+                [
+                    "eny",
+                    5
+                ],
+                [
+                    "n/fastGA",
+                    5
+                ],
+                [
+                    "rpa",
+                    2
+                ],
+                [
+                    "skw",
+                    2
+                ],
+                [
+                    "swa",
+                    10
+                ],
+                [
+                    "aal/short",
+                    5
+                ],
+                [
+                    "dal/short",
+                    10
+                ],
+                [
+                    "ual/short",
+                    10
+                ]
+            ]
+        },
+        {
+            "origin": "",
+            "destination": "KCMH",
+            "category": "arrival",
             "route": "JADUB.DUBLN1.KCMH28L",
             "altitude": "28000",
             "speed": "300",
             "method": "random",
-            "rate": 2,
             "scratchpad": "CMH",
             "owner": "C31",
             "rate": 3,
@@ -22746,7 +22774,7 @@
             "origin": "",
             "destination": "KCMH",
             "category": "arrival",
-            "route": "ESSIE.DUBLN1.KCMH28L",
+            "route": "FBC.DUBLN1.KCMH28L",
             "altitude": "14000",
             "speed": "320",
             "method": "random",
